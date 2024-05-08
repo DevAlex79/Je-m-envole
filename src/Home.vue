@@ -87,9 +87,9 @@ export default {
 
 .column {
     width: 50%;
-    /* Définissez la largeur de .column à 80% */
-    max-width: calc(50% - 20px);
-    /* Limitez la largeur de .column à 50% de la largeur de l'espace disponible (moins l'espacement entre les colonnes) */
+    /* Définir la largeur de .column */
+    max-width: calc(40% - 60px);
+    /* Limite la largeur de .column à 50% de la largeur de l'espace disponible (moins l'espacement entre les colonnes) */
     /*flex: 1 0 45%;
     /* Flex-grow: 1, Flex-shrink: 0, Flex-basis: 45% */
     display: flex;
@@ -101,7 +101,7 @@ export default {
 
 .article {
 
-    width: 60%;
+    width: 100%;
 
     display: flex;
     flex-direction: column;

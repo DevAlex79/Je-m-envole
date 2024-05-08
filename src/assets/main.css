@@ -107,6 +107,11 @@ article{
   gap: 15px;
 }*/
 
+.column{
+  width: 50%;
+  margin: 10px;
+}
+
 .texte-article{
   padding: 10px;
 }

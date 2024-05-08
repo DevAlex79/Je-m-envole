@@ -75,7 +75,8 @@ header {
 
 #menu {
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  /*gap: 20px;*/
   /* Espacement entre les éléments du menu */
 }
 </style>
