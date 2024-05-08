@@ -1,14 +1,14 @@
 <template>
     <div id="logo">
-            <img src="/src/svg/Logo.svg" alt="logo">
-        </div>
+        <img src="/src/svg/Logo.svg" alt="logo">
+    </div>
     <header>
         <div id="menu">
             <div class="menu">
                 <!--  Home ? A VOIR -->
-                <router-link to="/" class="active"> 
+                <router-link to="/" class="active">
                     <p class="principal">Accueil</p>
-                </router-link> 
+                </router-link>
                 <!--  Home ? A VOIR
                 <router-link to="/home" class="active">
                     <p class="principal">Accueil</p>
@@ -37,8 +37,8 @@ export default {
 /* Styles correspondants */
 /*body{
     width: 70%; /* Ajustez la largeur comme vous le souhaitez */
-    /*margin: 0 auto; /* Ajoutez cette ligne pour centrer le contenu horizontalement */
-    /* border: 1px solid #000;
+/*margin: 0 auto; /* Ajoutez cette ligne pour centrer le contenu horizontalement */
+/* border: 1px solid #000;
     border-radius: 5px 5px 5px 5px;
     background: #FFFFFF;
     font-family: Poppins;
@@ -46,7 +46,7 @@ export default {
 }*/
 
 /* Logo */
-#logo{
+#logo {
     display: flex;
     justify-content: center;
     flex-shrink: 0;
@@ -64,19 +64,20 @@ header {
     align-items: center;
     padding: 20px;
     width: 70%;
+    margin: 0 auto;
 }
 
-#menu{
+#menu {
     display: flex;
     justify-content: center;
 }
 
-.menu{
+.menu {
     display: flex;
-    justify-content: space-around; 
-    align-self: center; 
+    justify-content: space-around;
+    align-self: center;
     width: 46vw;
-    height: 30px; 
+    height: 30px;
     margin-top: 50px;
     margin-bottom: 30px;
 }
@@ -88,8 +89,19 @@ header {
     cursor: pointer;
 }
 
+#menu,
+p {
+    display: flex;
+    align-items: center;
+    color: #000000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: -0.42px;
+}
+
 .active .principal {
     color: #6066FA;
 }
-
 </style>
