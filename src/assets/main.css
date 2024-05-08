@@ -96,16 +96,16 @@ article{
   gap: 15px;
 }
 
-.article{
+/*.article{
   width: calc(50% - 15px); /* Deux colonnes, avec un espace entre elles */
   /*width: 345px;*/
-  height: 415px;
+  /*height: 415px;
   display: flex;
   justify-content: center;
   border-radius: 5px 5px 0px 0px;
   box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.05); 
   gap: 15px;
-}
+}*/
 
 .texte-article{
   padding: 10px;

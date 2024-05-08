@@ -34,26 +34,28 @@ export default {
 
 <style>
 /* styles CSS globaux si nécessaire */
-#app {
+/*#app {
   width: 70%;
   margin: 0 auto;
   /* Ajoutez cette ligne pour centrer le contenu horizontalement */
+/*border: 1px solid #000;
+  border-radius: 5px 5px 5px 5px;
+  background: #FFFFFF;
+  font-family: Poppins;
+  padding: 20px;
+}*/
+
+body {
+  width: 70%;
+  /* Ajuste la largeur */
+  margin: 0 auto;
+  /* Centre le contenu horizontalement */
   border: 1px solid #000;
   border-radius: 5px 5px 5px 5px;
   background: #FFFFFF;
   font-family: Poppins;
   padding: 20px;
 }
-
-/*body{
-    width: 70%; /* Ajustez la largeur comme vous le souhaitez */
-/*margin: 0 auto; /* Ajoutez cette ligne pour centrer le contenu horizontalement */
-/*border: 1px solid #000;
-    border-radius: 5px 5px 5px 5px;
-    background: #FFFFFF;
-    font-family: Poppins;
-    padding: 20px; 
-}*/
 
 #logo {
   display: flex;

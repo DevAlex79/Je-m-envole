@@ -86,25 +86,30 @@ export default {
 }
 
 .column {
-    width: 60%; /* Définissez la largeur de .column à 80% */
-    max-width: calc(50% - 20px); /* Limitez la largeur de .column à 50% de la largeur de l'espace disponible (moins l'espacement entre les colonnes) */
-    /*flex: 1 0 45%;*/
+    width: 50%;
+    /* Définissez la largeur de .column à 80% */
+    max-width: calc(50% - 20px);
+    /* Limitez la largeur de .column à 50% de la largeur de l'espace disponible (moins l'espacement entre les colonnes) */
+    /*flex: 1 0 45%;
     /* Flex-grow: 1, Flex-shrink: 0, Flex-basis: 45% */
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
 }
 
 .article {
-    width: 90%;
-    height: 415px;
+
+    width: 60%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.05);
-    gap: 15px;
+
 }
 
 .texte-article {
@@ -168,6 +173,6 @@ img {
     width: 100%;
     height: 200px;
     border-radius: 5px 5px 0px 0px;
-    /*object-fit: cover; /* Ajuste la taille de l'image pour qu'elle remplisse son conteneur */ 
+    /*object-fit: cover; /* Ajuste la taille de l'image pour qu'elle remplisse son conteneur */
 }
 </style>
