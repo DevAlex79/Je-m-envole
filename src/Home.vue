@@ -100,16 +100,13 @@ export default {
 }
 
 .article {
-
     width: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.05);
-
 }
 
 .texte-article {
@@ -175,4 +172,6 @@ img {
     border-radius: 5px 5px 0px 0px;
     /*object-fit: cover; /* Ajuste la taille de l'image pour qu'elle remplisse son conteneur */
 }
+
+
 </style>

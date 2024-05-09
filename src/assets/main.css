@@ -74,18 +74,18 @@ a{
   border: solid; 
 }*/
 
-#articles{
+/*#articles{
   display: flex;   
   /*width: 706px;
   height: 845px;
   align-items: center;
   flex-wrap: wrap;
   flex-direction:column;*/
-  justify-content: center;
+  /*justify-content: center;
   gap: 15px
-}
+}*/
 
-article{
+/*article{
   width: 706px;
   height: 845px;
   display: flex;
@@ -94,7 +94,7 @@ article{
   flex-wrap: wrap;
   align-items: center;
   gap: 15px;
-}
+}*/
 
 /*.article{
   width: calc(50% - 15px); /* Deux colonnes, avec un espace entre elles */
@@ -182,7 +182,7 @@ h2{
 
 /* Titre et image de chaque article */
 
-.titre{
+/*.titre{
   color: #333;
   font-family: Poppins;
   font-size: 18px;
@@ -197,7 +197,7 @@ img{
   height: 200px;
   flex-shrink: 0;
   border-radius: 5px 5px 0px 0px;
-}
+}*/
 
 /**************************** Checkout ********************/
 
