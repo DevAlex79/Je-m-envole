@@ -3,14 +3,17 @@
         <!--<Header /> -->
         <div class="articles-container">
             <div v-for="article in articles" :key="article.id" class="column">
-                <div class="article">
-                    <img :src="article.image" :alt="article.alt" />
-                    <div class="texte-article">
-                        <h2 :class="'categorie-' + article.category.toLowerCase()">{{ article.category }}</h2>
-                        <h1 class="titre">{{ article.title }}</h1>
-                        <p>{{ article.description }}</p>
+                <!-- router-link pour lier chaque article à la page SingleArticle -->
+                <router-link :to="'/article/' + article.id">
+                    <div class="article">
+                        <img :src="article.image" :alt="article.alt" />
+                        <div class="texte-article">
+                            <h2 :class="'categorie-' + article.category.toLowerCase()">{{ article.category }}</h2>
+                            <h1 class="titre">{{ article.title }}</h1>
+                            <p>{{ article.description }}</p>
+                        </div>
                     </div>
-                </div>
+                </router-link>
             </div>
         </div>
         <!--<Footer /> -->
@@ -27,7 +30,7 @@ import Footer from '@/components/Footer.vue';
 
 export default {
     name: 'Home',
-    
+
     components: {
         Header, // Enregistrement du composant Header
         Article, // Enregistrement du composant Article
@@ -173,5 +176,4 @@ img {
     border-radius: 5px 5px 0px 0px;
     /*object-fit: cover; /* Ajuste la taille de l'image pour qu'elle remplisse son conteneur */
 }
-
 </style>

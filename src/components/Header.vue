@@ -80,7 +80,7 @@ header {
 
 .menu p {
     margin: 0 15px;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header />
+        <!--<Header />-->
         
         <!--Contenu de l'article-->
         <main id="articleDetails">
@@ -16,7 +16,7 @@
             </div>
         </main>
 
-        <Footer />
+        <!--<Footer />-->
     </div>
 </template>
 

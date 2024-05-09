@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <!--<div>-->
     <Header :currentPage="currentPage" />
     <router-view :currentPage="currentPage" @update-page="updatePage" />
     <Article />
     <Footer />
 
-  </div>
+  <!--</div>-->
 </template>
 
 <script>
