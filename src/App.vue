@@ -1,9 +1,10 @@
 <template>
   <!--<div>-->
-    <Header :currentPage="currentPage" />
-    <router-view :currentPage="currentPage" @update-page="updatePage" />
-    <Article />
-    <Footer />
+  <Header />
+
+  <router-view></router-view>
+
+  <Footer />
 
   <!--</div>-->
 </template>
@@ -12,7 +13,7 @@
 import Home from './Home.vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
-import Article from './components/Article.vue'
+//import Article from './components/Article.vue'
 import Articles from './components/Articles.vue'
 import SingleArticle from './components/SingleArticle.vue'
 
@@ -21,7 +22,7 @@ export default {
   components: {
     Home,
     Header,
-    Article,
+    //Article,
     Articles,
     SingleArticle,
     Footer
@@ -78,5 +79,4 @@ header {
   /*gap: 20px;*/
   /* Espacement entre les éléments du menu */
 }
-
 </style>

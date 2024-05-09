@@ -1,7 +1,6 @@
 <template>
     <div>
         <!--<Header />-->
-        
         <!--Contenu de l'article-->
         <main id="articleDetails">
             <div class="article-details">
@@ -24,6 +23,7 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 
+
 export default {
     components: {
         Header,
@@ -36,8 +36,11 @@ export default {
     },
     mounted() {
         // Récupérer l'ID de l'article depuis l'URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const articleId = parseInt(urlParams.get('id'));
+        //const urlParams = new URLSearchParams(window.location.search);
+        //const articleId = parseInt(urlParams.get('id'));
+
+        // Récupérer l'ID de l'article à partir des paramètres de l'itinéraire
+        const articleId = this.$route.params.id;
 
         // Fetch les données des articles pour obtenir les détails de l'article
         fetch('data/articles.json')

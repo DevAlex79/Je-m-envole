@@ -22,9 +22,9 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import Article from '@/components/Article.vue';
+//import Article from '@/components/Article.vue';
 //import Articles from './components/Articles.vue';
-//import SingleArticle from './components/SingleArticle.vue';
+import SingleArticle from './components/SingleArticle.vue';
 import Footer from '@/components/Footer.vue';
 
 
@@ -33,9 +33,9 @@ export default {
 
     components: {
         Header, // Enregistrement du composant Header
-        Article, // Enregistrement du composant Article
+        //Article, // Enregistrement du composant Article
         //Articles, // Enregistrement du composant Articles
-        //SingleArticle,
+        SingleArticle,
         Footer // Enregistrement du composant Footer
     },
     data() {
