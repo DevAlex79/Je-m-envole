@@ -18,11 +18,11 @@
                     <h3>Suivez-moi</h3>
                 </div>
                 <div class="icones">
-                    <a href="/src/svg/facebook.svg" target="_blank"><img class="icone" src="./src/svg/ico-fb.svg"
+                    <a href="src/svg/facebook.svg" target="_blank"><img class="icone" src="@/svg/ico-fb.svg"
                             alt="Facebook"></a>
-                    <a href="/src/svg/ico-twitter.svg" target="_blank"><img class="icone" src="./src/svg/ico-twitter.svg"
+                    <a href="src/svg/ico-twitter.svg" target="_blank"><img class="icone" src="@/svg/ico-twitter.svg"
                             alt="Twitter"></a>
-                    <a href="/src/svg/ico-linkedin.svg" target="_blank"><img class="icone" src="./src/svg/ico-linkedin.svg"
+                    <a href="src/svg/ico-linkedin.svg" target="_blank"><img class="icone" src="@/svg/ico-linkedin.svg"
                             alt="LinkedIn"></a>
                 </div>
             </div>
@@ -44,18 +44,23 @@ export default {
 </script>
 
 <style scoped>
-
 footer {
     width: 100%;
-    padding: 20px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-end;
+    /*padding: 20px;*/
     background-color: #f2f2f2;
+
 }
 
 .footer {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: flex-end;
 }
+
 
 .logo-small {
     width: 100px;
@@ -80,13 +85,29 @@ footer {
     font-size: 13px;
 }
 
-.icones {
+#follow {
     display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
 }
 
+.follow {
+    padding: 10px;
+}
+
+.icones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .icone {
-    width: 25px;
+    width: auto;
     height: 25px;
+    color: #333333;
     margin: 2px;
 }
 
