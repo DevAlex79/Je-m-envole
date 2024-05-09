@@ -1,9 +1,7 @@
 <template>
   <div>
-    <Header />
-
-    <router-view></router-view>
-
+    <Header :currentPage="currentPage" />
+    <router-view :currentPage="currentPage" @update-page="updatePage" />
     <Article />
     <Footer />
 
@@ -29,6 +27,7 @@ export default {
     Footer
 
   }
+
 }
 </script>
 
@@ -79,4 +78,5 @@ header {
   /*gap: 20px;*/
   /* Espacement entre les éléments du menu */
 }
+
 </style>

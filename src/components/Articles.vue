@@ -56,7 +56,6 @@ export default {
 </script>
 
 <style scoped>
-
 #articles {
     padding: 15px;
     display: flex;
@@ -74,7 +73,7 @@ export default {
     max-width: 706px;
     /* Limite de largeur pour chaque article */
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.05);
-    
+
 }
 
 .image {
@@ -94,7 +93,7 @@ img {
     /* Pour que le texte occupe tout l'espace disponible */
     color: #808080;
     font-family: Lato;
-    
+
 }
 
 h2,
@@ -149,7 +148,7 @@ p {
     background-color: #fef4e7;
 }
 
-.active .principal {
+.active  {
     color: #6066FA;
 }
 </style>

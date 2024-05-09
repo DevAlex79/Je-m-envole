@@ -6,21 +6,17 @@
         <div id="menu">
             <div class="menu">
                 <!--  Home ? A VOIR -->
-                <router-link to="/" class="active">
-                    <p class="principal">Accueil</p>
+                <router-link to="/" exact class="menu-item">
+                    <p :class="{ 'active': $route.path === '/' || $route.path === '/home' }">Accueil</p>
                 </router-link>
-                <!--  Home ? A VOIR
-                <router-link to="/home" class="active">
-                    <p class="principal">Accueil</p>
-                </router-link>  -->
-                <router-link to="/articles">
-                    <p class="about">Articles</p>
+                <router-link to="/articles" exact class="menu-item">
+                    <p :class="{ 'active': $route.path === '/articles' }">Articles</p>
                 </router-link>
-                <router-link to="/contact">
-                    <p class="contact">Contact</p>
+                <router-link to="/contact" exact class="menu-item">
+                    <p :class="{ 'active': $route.path === '/contact' }">Contact</p>
                 </router-link>
-                <router-link to="/checkout">
-                    <p class="checkout">Panier</p>
+                <router-link to="/checkout" exact class="menu-item">
+                    <p :class="{ 'active': $route.path === '/checkout' }">Panier</p>
                 </router-link>
             </div>
         </div>
@@ -101,7 +97,14 @@ p {
     letter-spacing: -0.42px;
 }
 
-.active .principal {
+.menu-item {
+    margin: 0 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.active {
     color: #6066FA;
 }
 </style>

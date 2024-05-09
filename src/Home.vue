@@ -27,6 +27,7 @@ import Footer from '@/components/Footer.vue';
 
 export default {
     name: 'Home',
+    
     components: {
         Header, // Enregistrement du composant Header
         Article, // Enregistrement du composant Article
@@ -172,6 +173,5 @@ img {
     border-radius: 5px 5px 0px 0px;
     /*object-fit: cover; /* Ajuste la taille de l'image pour qu'elle remplisse son conteneur */
 }
-
 
 </style>
