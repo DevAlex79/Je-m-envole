@@ -2,14 +2,15 @@
     <main id="articles">
         <article v-for="(article, index) in articles" :key="index" class="article">
             <div class="image">
-                <a :href="'singlearticle.html?id=' + article.id" target="_blank"><img :src="article.image"
-                        :alt="article.alt" style="width: auto; height: 100%;"></a>
+                <router-link :to="{ name: 'SingleArticle', params: { id: article.id } }">
+                    <img :src="article.image" :alt="article.alt" style="width: auto; height: 100%;">
+                </router-link>
             </div>
             <div class="texte-article">
-                <a :href="'singlearticle.html?id=' + article.id" target="_blank">
+                <router-link :to="{ name: 'SingleArticle', params: { id: article.id } }">
                     <h2 :class="getCategorieClass(article.category)">{{ article.category }}</h2>
                     <h1 class="titre">{{ article.title }}</h1>
-                </a>
+                </router-link>
                 <p>{{ article.description }}</p>
             </div>
         </article>
@@ -39,7 +40,7 @@ export default {
 
     mounted() {
         // Fetch les données des articles et afficher chaque article dans la liste
-        fetch('data/articles.json')
+        fetch('../data/articles.json')
             .then(response => response.json())
             .then(articles => {
                 this.articles = articles; // Mettez à jour la liste d'articles avec les données du fichier JSON

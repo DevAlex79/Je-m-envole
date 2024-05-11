@@ -8,8 +8,8 @@
                     <img :src="article.image" :alt="article.title">
                 </div>
                 <div class="texte-article">
-                    <h1>{{ article.title }}</h1>
                     <h2>{{ article.category }}</h2>
+                    <h1>{{ article.title }}</h1>
                     <p>{{ article.description }}</p>
                 </div>
             </div>
@@ -40,14 +40,18 @@ export default {
         //const articleId = parseInt(urlParams.get('id'));
 
         // Récupérer l'ID de l'article à partir des paramètres de l'itinéraire
-        const articleId = this.$route.params.id;
+        const articleId = parseInt(this.$route.params.id); // Convertir en nombre
+        //const articleId = this.$route.params.id;
+        console.log("ID de l'article récupéré :", articleId);
 
         // Fetch les données des articles pour obtenir les détails de l'article
-        fetch('data/articles.json')
+        fetch('../data/articles.json')
             .then(response => response.json())
             .then(articles => {
+                console.log("Liste des articles :", articles);
                 // Utiliser l'ID pour récupérer les détails de l'article
                 const articleDetails = articles.find(article => article.id === articleId);
+                console.log("Détails de l'article trouvé :", articleDetails);
 
                 if (!articleDetails) {
                     console.error('Article non trouvé.');
@@ -65,41 +69,59 @@ export default {
 #articleDetails {
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    flex-wrap: wrap;
     align-items: center;
-    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.05);
-    gap: 15px;
+    flex-direction: column; /* Met en colonne les éléments enfants */
+    gap: 20px; /* Ajoute un espacement entre les éléments */
+    padding: 20px; /* Ajoute un peu d'espace autour du contenu */
 }
 
 .article-details {
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Met en colonne les éléments enfants */
     align-items: center;
-    border-radius: 5px 5px 0px 0px;
-    box-shadow: 3px 3px 3px 3px rgba(2, 2, 2, 0.09);
+    max-width: 600px; /* Limite la largeur de la zone de contenu */
+    /*text-align: center; /* Centre le texte */
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 1);
 }
 
 .image {
-    margin-right: 20px;
+    margin-bottom: 20px; /* Ajoute un peu d'espace en bas de l'image */
 }
 
 .image img {
     max-width: 100%;
     height: auto;
+    border-radius: 5px 5px 0px 0px;
 }
 
 .texte-article {
-    max-width: 600px;
     color: #808080;
     font-family: Lato;
     font-size: 14px;
     font-style: normal;
+    /*text-align: center; /* Centre le texte */ 
 }
 
-.texte-article h2,
 .texte-article h1,
+.texte-article h2 {
+    margin: 10px 0; /* Ajoute un peu d'espace autour des titres */
+}
+
+.texte-article h2 {
+    color: #FA5158;
+    background-color: #FEE6E7;
+    width: 57px;
+    height: 16px;
+}
+
+.texte-article h1 {
+    font-size: 22px;
+    font-style: normal;
+    color: #333;
+}
+
 .texte-article p {
-    margin: 0;
+    margin: 0; /* Supprime les marges par défaut des paragraphes */
 }
 </style>
+
