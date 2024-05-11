@@ -8,7 +8,7 @@
                     <img :src="article.image" :alt="article.title">
                 </div>
                 <div class="texte-article">
-                    <h2>{{ article.category }}</h2>
+                    <h2 :class="getCategorieClass(article.category)">{{ article.category }}</h2>
                     <h1>{{ article.title }}</h1>
                     <p>{{ article.description }}</p>
                 </div>
@@ -33,6 +33,23 @@ export default {
         return {
             article: {} // Initialisez l'objet article avec des données vides
         };
+    },
+    methods: {
+        getCategorieClass(category) {
+            // Logique pour obtenir la classe CSS en fonction de la catégorie
+            // Par exemple :
+            if (category === 'Cuisine') {
+                return 'categorie-cuisine';
+            } else if (category === 'Jardin') {
+                return 'categorie-jardin';
+            } else if (category === 'Loisirs') {
+                return 'categorie-loisirs';
+            } else if (category === 'Voyages') {
+                return 'categorie-voyages';
+            } else {
+                return ''; // Retourne une chaîne vide par défaut si la catégorie n'est pas définie
+            }
+        }
     },
     mounted() {
         // Récupérer l'ID de l'article depuis l'URL
@@ -108,8 +125,8 @@ export default {
 }
 
 .texte-article h2 {
-    color: #FA5158;
-    background-color: #FEE6E7;
+    /*color: #FA5158;
+    background-color: #FEE6E7;*/
     width: 57px;
     height: 16px;
 }
@@ -122,6 +139,26 @@ export default {
 
 .texte-article p {
     margin: 0; /* Supprime les marges par défaut des paragraphes */
+}
+
+.categorie-cuisine {
+    color: #FA5158;
+    background-color: #FEE6E7;
+}
+
+.categorie-jardin {
+    color: #44D382;
+    background-color: #eafaf1;
+}
+
+.categorie-loisirs {
+    color: #56CFE1;
+    background: #E9F9FB;
+}
+
+.categorie-voyages {
+    color: #F39E30;
+    background-color: #fef4e7;
 }
 </style>
 
