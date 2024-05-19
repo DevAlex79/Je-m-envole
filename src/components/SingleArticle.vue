@@ -12,7 +12,7 @@
                     <h1>{{ article.title }}</h1>
                     <p>{{ article.description }}</p>
                     <p>Prix: {{ article.price }} €</p>
-                    <button @click="addToCart(article)">Ajouter au panier</button>
+                    <button :class="getButtonClass(article.category)" @click="addToCart(article)">Ajouter au panier</button>
                 </div>
             </div>
         </main>
@@ -50,6 +50,19 @@ export default {
                 return 'categorie-voyages';
             } else {
                 return ''; // Retourne une chaîne vide par défaut si la catégorie n'est pas définie
+            }
+        },
+        getButtonClass(category) {
+            if (category === 'Cuisine') {
+                return 'button-cuisine';
+            } else if (category === 'Jardin') {
+                return 'button-jardin';
+            } else if (category === 'Loisirs') {
+                return 'button-loisirs';
+            } else if (category === 'Voyages') {
+                return 'button-voyages';
+            } else {
+                return ''; 
             }
         },
         addToCart(article) {
@@ -178,5 +191,29 @@ export default {
 .categorie-voyages {
     color: #F39E30;
     background-color: #fef4e7;
+}
+
+button {
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-cuisine {
+    background-color: #FA5158;
+}
+
+.button-jardin {
+    background-color: #44D382;
+}
+
+.button-loisirs {
+    background-color: #56CFE1;
+}
+
+.button-voyages {
+    background-color: #F39E30;
 }
 </style>
