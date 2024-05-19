@@ -71,16 +71,21 @@ export default {
         fetch('../data/articles.json')
             .then(response => response.json())
             .then(articles => {
-                console.log("Liste des articles :", articles);
+                //console.log("Liste des articles :", articles);
                 // Utiliser l'ID pour récupérer les détails de l'article
                 const articleDetails = articles.find(article => article.id === articleId);
                 console.log("Détails de l'article trouvé :", articleDetails);
 
-                if (!articleDetails) {
+                /*if (!articleDetails) {
                     console.error('Article non trouvé.');
                 } else {
                     // Mettre à jour la donnée de l'article
                     this.article = articleDetails;
+                }*/
+                if (articleDetails) {
+                    this.article = articleDetails;
+                } else {
+                    console.error('Article non trouvé.');
                 }
             })
             .catch(error => console.error('Erreur lors de la récupération des données de l\'article:', error));
@@ -93,22 +98,28 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; /* Met en colonne les éléments enfants */
-    gap: 20px; /* Ajoute un espacement entre les éléments */
-    padding: 20px; /* Ajoute un peu d'espace autour du contenu */
+    flex-direction: column;
+    /* Met en colonne les éléments enfants */
+    gap: 20px;
+    /* Ajoute un espacement entre les éléments */
+    padding: 20px;
+    /* Ajoute un peu d'espace autour du contenu */
 }
 
 .article-details {
     display: flex;
-    flex-direction: column; /* Met en colonne les éléments enfants */
+    flex-direction: column;
+    /* Met en colonne les éléments enfants */
     align-items: center;
-    max-width: 600px; /* Limite la largeur de la zone de contenu */
+    max-width: 600px;
+    /* Limite la largeur de la zone de contenu */
     /*text-align: center; /* Centre le texte */
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 1);
 }
 
 .image {
-    margin-bottom: 20px; /* Ajoute un peu d'espace en bas de l'image */
+    margin-bottom: 20px;
+    /* Ajoute un peu d'espace en bas de l'image */
 }
 
 .image img {
@@ -122,12 +133,13 @@ export default {
     font-family: Lato;
     font-size: 14px;
     font-style: normal;
-    /*text-align: center; /* Centre le texte */ 
+    /*text-align: center; /* Centre le texte */
 }
 
 .texte-article h1,
 .texte-article h2 {
-    margin: 10px 0; /* Ajoute un peu d'espace autour des titres */
+    margin: 10px 0;
+    /* Ajoute un peu d'espace autour des titres */
 }
 
 .texte-article h2 {
@@ -144,7 +156,8 @@ export default {
 }
 
 .texte-article p {
-    margin: 0; /* Supprime les marges par défaut des paragraphes */
+    margin: 0;
+    /* Supprime les marges par défaut des paragraphes */
 }
 
 .categorie-cuisine {
@@ -167,4 +180,3 @@ export default {
     background-color: #fef4e7;
 }
 </style>
-
