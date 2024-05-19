@@ -1,7 +1,6 @@
 <template>
     <div>
         <Header />
-
         <!--Formulaire de contact-->
         <main>
             <div class="bottle">
@@ -26,7 +25,6 @@
                 </form>
             </div>
         </main>
-
         <Footer />
     </div>
 </template>
@@ -36,7 +34,7 @@ import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 
 export default {
-    // Logique JavaScript ici si nécessaire
+    
 };
 </script>
 

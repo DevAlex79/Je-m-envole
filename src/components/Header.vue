@@ -15,8 +15,8 @@
                 <router-link to="/contact" exact class="menu-item">
                     <p :class="{ 'active': $route.path === '/contact' }">Contact</p>
                 </router-link>
-                <router-link to="/checkout" exact class="menu-item">
-                    <p :class="{ 'active': $route.path === '/checkout' }">Panier</p>
+                <router-link to="/cart" exact class="menu-item">
+                    <p :class="{ 'active': $route.path === '/cart' }">Panier</p>
                 </router-link>
             </div>
         </div>

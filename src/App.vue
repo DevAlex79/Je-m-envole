@@ -16,6 +16,8 @@ import Footer from './components/Footer.vue'
 //import Article from './components/Article.vue'
 import Articles from './components/Articles.vue'
 import SingleArticle from './components/SingleArticle.vue'
+import Contact from './components/Contact.vue'
+import Cart from './components/Cart.vue'
 
 export default {
   name: 'App',
@@ -25,6 +27,8 @@ export default {
     //Article,
     Articles,
     SingleArticle,
+    Contact,
+    Cart,
     Footer
 
   }

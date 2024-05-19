@@ -11,10 +11,11 @@
                     <h2 :class="getCategorieClass(article.category)">{{ article.category }}</h2>
                     <h1>{{ article.title }}</h1>
                     <p>{{ article.description }}</p>
+                    <p>Prix: {{ article.price }} €</p>
+                    <button @click="addToCart(article)">Ajouter au panier</button>
                 </div>
             </div>
         </main>
-
         <!--<Footer />-->
     </div>
 </template>
@@ -22,6 +23,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
+import { useCartStore } from '@/store/cartStore';
 
 
 export default {
@@ -49,6 +51,10 @@ export default {
             } else {
                 return ''; // Retourne une chaîne vide par défaut si la catégorie n'est pas définie
             }
+        },
+        addToCart(article) {
+            const cartStore = useCartStore();
+            cartStore.addItem(article);
         }
     },
     mounted() {
@@ -57,7 +63,7 @@ export default {
         //const articleId = parseInt(urlParams.get('id'));
 
         // Récupérer l'ID de l'article à partir des paramètres de l'itinéraire
-        const articleId = parseInt(this.$route.params.id); // Convertir en nombre
+        const articleId = parseInt(this.$route.params.id, 10); // Convertir en nombre
         //const articleId = this.$route.params.id;
         console.log("ID de l'article récupéré :", articleId);
 

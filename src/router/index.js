@@ -5,6 +5,7 @@ import Articles from '@/components/Articles.vue';
 //import Article from '@/components/Article.vue'; = SINGLE ARTICLE
 import SingleArticle from '@/components/SingleArticle.vue';
 import Contact from '@/components/Contact.vue';
+import Cart from '@/components/Cart.vue';
 
 const routes = [
 
@@ -29,11 +30,11 @@ const routes = [
         name: "Contact",
         component: Contact,
     },
-    // {
-    //     path: "/checkout",
-    //     name: "Checkout",
-    //     component: Checkout,
-    // },
+    {
+        path: "/cart",
+        name: "Cart",
+        component: Cart,
+    },
 
     // Ajout d'autres routes si nécessaire
 ];
