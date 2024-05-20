@@ -38,17 +38,17 @@
             </thead>
             <tbody id="cartBody">
                 <tr v-for="line in cart.lines.lines" :key="line.name">
-                    <td>{{ line.name }}</td>
-                    <td>{{ line.quantity }}</td>
-                    <td>{{ line.unitPrice }}€</td>
-                    <td>{{ line.total }}€</td>
+                    <td :style="{ color: '#000000' }">{{ line.name }}</td>
+                    <td :style="{ color: '#000000' }">{{ line.quantity }}</td>
+                    <td :style="{ color: '#000000' }">{{ line.unitPrice }}€</td>
+                    <td :style="{ color: '#000000' }">{{ line.total }}€</td>
                     <td><button @click="removeProductFromCart(line)" class="remove-row">Supprimer</button></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="5">
-                        <button @click="addRow">Ajouter une ligne</button>
+                        <button @click="addRow" class="add-row-button">Ajouter une ligne</button>
                     </td>
                 </tr>
             </tfoot>
@@ -66,17 +66,17 @@
         </div>
 
         <div class="totals-container">
-            <table>
+            <table class="totals-table">
                 <tbody>
                     <tr>
-                        <td>Total Articles:</td>
-                        <td><span id="total-nombre-articles">{{ totalArticles }}</span></td>
-                        <td>Prix Total Articles:</td>
-                        <td><span id="prix-total-articles">{{ totalArticlesPrice }}</span>€</td>
-                        <td>Livraison:</td>
-                        <td><span id="livraison-price">{{ shipmentPrice }}</span>€</td>
-                        <td>Total Général:</td>
-                        <td><span id="prix-total">{{ totalPrice }}</span>€</td>
+                        <td style="color: #000000;">Total Articles:</td>
+                        <td><span id="total-nombre-articles" :style="{ color: '#000000' }">{{ totalArticles }}</span></td>
+                        <td style="color: #000000;">Prix Total Articles:</td>
+                        <td><span id="prix-total-articles" :style="{ color: '#000000' }">{{ totalArticlesPrice }}</span>€</td>
+                        <td style="color: #000000;">Livraison:</td>
+                        <td><span id="livraison-price" :style="{ color: '#000000' }">{{ shipmentPrice }}</span>€</td>
+                        <td style="color: #000000;">Total Général:</td>
+                        <td><span id="prix-total" :style="{ color: '#000000' }">{{ totalPrice }}</span>€</td>
                     </tr>
                 </tbody>
             </table>
@@ -121,11 +121,13 @@ export default {
 </script>
 
 <style scoped>
+
 h1 {
     font-family: Poppins;
     font-size: 25px;
     font-style: bold;
     text-align: center;
+    color: #000000;
 }
 
 #cartBody {
@@ -136,9 +138,33 @@ h1 {
 table {
     width: 70%;
     margin: 0 auto;
-    border-collapse: collapse;
     margin-top: 20px;
     margin-bottom: 20px;
+    border-collapse: separate; /* Utiliser 'separate' pour gérer les bordures et le border-radius */
+    border-spacing: 0; /* Pas d'espace entre les cellules */
+    overflow: hidden;
+}
+
+#checkout {
+    border-radius: 5px; /* Coins arrondis */
+    overflow: hidden; /* Pour s'assurer que les coins du contenu suivent le border-radius */
+    border: 1px solid #000000; /* Bordure pour rendre le border-radius visible */
+}
+
+thead tr:first-child th:first-child {
+    border-top-left-radius: 5px; /* Coin supérieur gauche */
+}
+
+thead tr:first-child th:last-child {
+    border-top-right-radius: 5px; /* Coin supérieur droit */
+}
+
+tfoot tr:last-child td:first-child {
+    border-bottom-left-radius: 5px; /* Coin inférieur gauche */
+}
+
+tfoot tr:last-child td:last-child {
+    border-bottom-right-radius: 5px; /* Coin inférieur droit */
 }
 
 th,
@@ -146,10 +172,12 @@ td {
     border: 1px solid #000000;
     padding: 8px;
     text-align: left;
+    color: #000000 !important; /* texte noir */
 }
 
 th {
     background-color: #f2f2f2;
+    
 }
 
 .remove-row {
@@ -161,23 +189,47 @@ th {
     font-size: larger;
 }
 
+.add-row-button {
+    background-color: #6066FA; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    padding: 10px 20px; /* Padding */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer; /* Curseur de la main */
+    font-weight: bold; /* Texte en gras */
+}
+
 .totals-container {
     margin-top: 20px;
 }
 
 .totals-container table {
-    border: 1px solid #ddd;
-    color: #000000;
-    font-weight: 600;
+    width: 70%;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #000;
 }
 
-.totals-container td {
+.totals-table {
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #000000; /* Bordure noire */
+}
+
+.totals-table td {
+    border: 1px solid #000; /* Bordure des cellules */
     padding: 8px;
     text-align: left;
+    color: #000000 !important; /* Texte en noir */
 }
 
 .totals-container span {
     font-weight: bold;
+    color: #000000 !important;
 }
 
 .label {
@@ -190,7 +242,9 @@ label {
     display: block;
     margin: 0 11vw;
     padding: 5px;
+    color: #000000 !important;
 }
+
 
 
 /*#cart {
