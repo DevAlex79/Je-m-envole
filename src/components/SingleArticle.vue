@@ -11,11 +11,15 @@
                     <h2 :class="getCategorieClass(article.category)">{{ article.category }}</h2>
                     <h1>{{ article.title }}</h1>
                     <p>{{ article.description }}</p>
-                    <p>Prix: {{ article.price }} €</p>
+                    <p class="price">Prix: <span class="price-value">{{ article.price }} €</span></p>
                     <button :class="getButtonClass(article.category)" @click="addToCart(article)">Ajouter au panier</button>
                 </div>
             </div>
         </main>
+        <!-- Afficher le message de succès -->
+        <div v-if="showSuccessMessage" class="success-message">
+            Article ajouté au panier
+        </div>
         <!--<Footer />-->
     </div>
 </template>
@@ -33,7 +37,9 @@ export default {
     },
     data() {
         return {
-            article: {} // Initialisez l'objet article avec des données vides
+            article: {}, // Initialisez l'objet article avec des données vides
+            showSuccessMessage: false,
+            cart: useCartStore(), // Utilisez le store dans la propriété cart
         };
     },
     methods: {
@@ -66,9 +72,17 @@ export default {
             }
         },
         addToCart(article) {
-            const cartStore = useCartStore();
-            cartStore.addItem(article);
-        }
+            // Appeler la méthode addProductToCart du store via la propriété cart
+            this.cart.addProductToCart(article);
+
+            // Afficher le message de succès
+            this.showSuccessMessage = true;
+
+            // Cacher le message après quelques secondes (par exemple, 3 secondes)
+            setTimeout(() => {
+                this.showSuccessMessage = false;
+            }, 3000);
+        },
     },
     mounted() {
         // Récupérer l'ID de l'article depuis l'URL
@@ -193,6 +207,14 @@ export default {
     background-color: #fef4e7;
 }
 
+.price {
+    font-weight: bold; /* Rend le texte en gras */
+}
+
+.price-value {
+    color: black; /* Définit la couleur du texte en noir */
+}
+
 button {
     color: #fff;
     border: none;
@@ -215,5 +237,17 @@ button {
 
 .button-voyages {
     background-color: #F39E30;
+}
+
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #44D382;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 </style>
