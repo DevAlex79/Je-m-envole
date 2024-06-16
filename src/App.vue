@@ -18,6 +18,7 @@ import Articles from './components/Articles.vue'
 import SingleArticle from './components/SingleArticle.vue'
 import Contact from './components/Contact.vue'
 import Cart from './components/Cart.vue'
+//import { useCartStore } from './store/cartStore'
 
 export default {
   name: 'App',
@@ -30,8 +31,11 @@ export default {
     Contact,
     Cart,
     Footer
-
-  }
+  },
+  /*mounted() {
+    // Initialisez l'expédition lorsque le composant est monté
+    useCartStore().initShipment();
+  },*/
 
 }
 </script>

@@ -1,8 +1,77 @@
-import { ref, computed } from 'vue';
+import { reactive, computed } from 'vue';
+
+const shipment = reactive({
+    type: 'relais', // Par défaut à relais
+    calculatePrice() {
+        switch (this.type) {
+            case 'relais':
+                return 5;
+            case 'domicile':
+                return 12;
+            default:
+                return 0;
+        }
+    },
+    price: computed(() => shipment.calculatePrice())
+});
+
+export default shipment;
+
+
+/*// Modèle livraison
+export default class Shipment {
+    constructor() {
+        this.type = 'relais'; // Par défaut à relais
+    }
+
+    calculatePrice() {
+        switch (this.type) {
+            case 'relais':
+                return 5;
+            case 'domicile':
+                return 12;
+            default:
+                return 0;
+        }
+    }
+
+    setShipmentType(type) {
+        this.type = type;
+    }
+
+    get price() {
+        return this.calculatePrice();
+    }
+}*/
+
+
+/*import { reactive, computed } from 'vue';
+
+// Modèle livraison
+const shipment = reactive({
+    type: 'relais', // Par défaut à relais
+    calculatePrice() {
+        switch (this.type) {
+            case 'relais':
+                return 5;
+            case 'domicile':
+                return 12;
+            default:
+                return 0;
+        }
+    },
+    price: computed(() => shipment.calculatePrice())
+});
+
+export default shipment;*/
+
+
+
+/*import { ref, computed } from 'vue';
 
 export class Shipment {
     constructor() {
-        this.type = ref('relais'); // Par défaut à relais
+        this.type = ref('relais'); // Initialiser comme une référence
         this.price = computed(() => this.calculatePrice());
     }
 
@@ -11,9 +80,17 @@ export class Shipment {
     }
 
     calculatePrice() {
-        return this.type.value === 'relais' ? 5 : (this.type.value === 'domicile' ? 12 : 0);
+        switch (this.type.value) {
+            case 'relais':
+                return 5;
+            case 'domicile':
+                return 12;
+            default:
+                return 0;
+        }
     }
-}
+}*/
+
 
 
 /*export class Shipment {

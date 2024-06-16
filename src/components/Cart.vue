@@ -31,13 +31,21 @@
 
         <div class="label">
             <label>
-                <input type="radio" name="livraison-type" value="relais" @change="updateShipmentType('relais')" checked>
+                <input type="radio" name="livraison-type" value="relais" @change="updateShipmentType('relais')" :checked="cart.shipment.type === 'relais'">
                 Relais Colis (5€)
             </label>
             <label>
-                <input type="radio" name="livraison-type" value="domicile" @change="updateShipmentType('domicile')"> À
-                Domicile (12€)
+                <input type="radio" name="livraison-type" value="domicile" @change="updateShipmentType('domicile')" :checked="cart.shipment.type === 'domicile'">
+                À Domicile (12€)
             </label>
+            <!--<label>
+                <input type="radio" name="livraison-type" value="relais" @change="updateShipmentType('relais')" :checked="cart.shipment.type.value === 'relais'">
+                Relais Colis (5€)
+            </label>
+            <label>
+                <input type="radio" name="livraison-type" value="domicile" @change="updateShipmentType('domicile')" :checked="cart.shipment.type.value === 'domicile'">
+                À Domicile (12€)
+            </label>-->
         </div>
 
         <div class="totals-container">
@@ -70,7 +78,8 @@ export default {
     name: 'Cart',
     setup() {
         const cart = useCartStore();
-        cart.loadCartFromLocalStorage(); // Charger le panier depuis le stockage local
+        //cart.loadCartFromLocalStorage(); // Charger le panier depuis le stockage local
+        cart.initShipment();
 
         function addRow() {
             const newLine = { title: 'Nouvel article', quantity: 1, unitPrice: 0, total: 0 };
@@ -96,13 +105,14 @@ export default {
             totalPrice: cart.totalPrice
         };
     },
-    computed: {
+    /*computed: {
         cart() {
             return useCartStore();
         }
-    },
+    },*/
     mounted() {
-    this.cart.loadCartFromLocalStorage();
+        this.cart.initShipment();  
+    //this.cart.loadCartFromLocalStorage();
     }
 };
 </script>

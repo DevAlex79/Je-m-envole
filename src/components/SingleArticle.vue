@@ -12,7 +12,8 @@
                     <h1>{{ article.title }}</h1>
                     <p>{{ article.description }}</p>
                     <p class="price">Prix: <span class="price-value">{{ article.price }} €</span></p>
-                    <button :class="getButtonClass(article.category)" @click="addToCart(article)">Ajouter au panier</button>
+                    <button :class="getButtonClass(article.category)" @click="addToCart(article)">Ajouter au
+                        panier</button>
                 </div>
             </div>
         </main>
@@ -30,6 +31,7 @@ import Footer from '@/components/Footer.vue';
 import { useCartStore } from '@/store/cartStore';
 
 
+
 export default {
     components: {
         Header,
@@ -44,44 +46,38 @@ export default {
     },
     methods: {
         getCategorieClass(category) {
-            // Logique pour obtenir la classe CSS en fonction de la catégorie
-            // Par exemple :
-            if (category === 'Cuisine') {
-                return 'categorie-cuisine';
-            } else if (category === 'Jardin') {
-                return 'categorie-jardin';
-            } else if (category === 'Loisirs') {
-                return 'categorie-loisirs';
-            } else if (category === 'Voyages') {
-                return 'categorie-voyages';
-            } else {
-                return ''; // Retourne une chaîne vide par défaut si la catégorie n'est pas définie
+            switch (category) {
+                case 'Cuisine': return 'categorie-cuisine';
+                case 'Jardin': return 'categorie-jardin';
+                case 'Loisirs': return 'categorie-loisirs';
+                case 'Voyages': return 'categorie-voyages';
+                default: return '';
             }
         },
         getButtonClass(category) {
-            if (category === 'Cuisine') {
-                return 'button-cuisine';
-            } else if (category === 'Jardin') {
-                return 'button-jardin';
-            } else if (category === 'Loisirs') {
-                return 'button-loisirs';
-            } else if (category === 'Voyages') {
-                return 'button-voyages';
-            } else {
-                return ''; 
+            switch (category) {
+                case 'Cuisine': return 'button-cuisine';
+                case 'Jardin': return 'button-jardin';
+                case 'Loisirs': return 'button-loisirs';
+                case 'Voyages': return 'button-voyages';
+                default: return '';
             }
         },
         addToCart(article) {
+            console.log('Adding to cart:', article);
             // Appeler la méthode addProductToCart du store via la propriété cart
             this.cart.addProductToCart(article);
 
             // Afficher le message de succès
             this.showSuccessMessage = true;
 
-            // Cacher le message après quelques secondes (par exemple, 3 secondes)
+            // Cacher le message après quelques secondes
             setTimeout(() => {
                 this.showSuccessMessage = false;
             }, 3000);
+
+            // Redirigez l'utilisateur vers la page du panier
+            this.$router.push({ name: 'Cart' });
         },
     },
     mounted() {
@@ -208,11 +204,13 @@ export default {
 }
 
 .price {
-    font-weight: bold; /* Rend le texte en gras */
+    font-weight: bold;
+    /* Rend le texte en gras */
 }
 
 .price-value {
-    color: black; /* Définit la couleur du texte en noir */
+    color: black;
+    /* Définit la couleur du texte en noir */
 }
 
 button {

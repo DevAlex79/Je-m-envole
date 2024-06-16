@@ -1,30 +1,33 @@
 import { defineStore } from "pinia";
 import { Lines } from '../models/Lines';
-import { Shipment } from '../models/Shipment';
+import shipment from '../models/Shipment';
 
 export const useCartStore = defineStore('cart', {
     state: () => ({
         lines: new Lines(),
-        shipment: new Shipment()
+        //shipment: import('../models/Shipment').then(({ default: shipment }) => shipment)
+        shipment: shipment
     }),
     actions: {
-        // Ajouter un produit au panier
         addProductToCart(product) {
-            product.quantity = product.quantity || 1;
-            product.total = product.total || (product.unitPrice ? product.quantity * product.unitPrice : 0);
-            this.lines.addLine(product);
+            console.log('Product to add:', product);
+            const existingLine = this.lines.lines.find(line => line.name === product.name);
+            if (existingLine) {
+                existingLine.quantity += 1;
+                existingLine.total = existingLine.unitPrice * existingLine.quantity;
+            } else {
+                product.quantity = product.quantity || 1;
+                product.total = product.unitPrice ? product.quantity * product.unitPrice : 0;
+                this.lines.addLine(product);
+            }
             this.saveCartToLocalStorage();
         },
-        // Retirer un produit du panier
         removeProductFromCart(product) {
-            // Retirer le produit de la liste des lignes du panier
             this.lines.removeLine(product);
             this.saveCartToLocalStorage();
         },
-        // Mettre à jour le type de livraison
         updateShipmentType(type) {
-            // Mettre à jour le type de livraison dans l'état du store
-            this.shipment.setShipmentType(type);
+            this.shipment.type = type;
             this.saveCartToLocalStorage();
         },
         saveCartToLocalStorage() {
@@ -36,22 +39,30 @@ export const useCartStore = defineStore('cart', {
             const shipment = localStorage.getItem('shipment');
             if (cart) {
                 const parsedCart = JSON.parse(cart);
-                parsedCart.forEach(item => this.lines.addLine(item));
+                parsedCart.forEach(item => {
+                    const existingLine = this.lines.lines.find(line => line.id === item.id);
+                    if (existingLine) {
+                        existingLine.quantity += item.quantity;
+                        existingLine.total = existingLine.unitPrice * existingLine.quantity;
+                    } else {
+                        this.lines.addLine(item);
+                    }
+                });
             }
             if (shipment) {
-                Object.assign(this.shipment, JSON.parse(shipment));
+                const parsedShipment = JSON.parse(shipment);
+                this.shipment.type = parsedShipment.type || 'relais';
             }
+        },
+        initShipment() {
+            this.loadCartFromLocalStorage();
         }
     },
     getters: {
-        // Calculer le nombre total d'articles dans le panier
-        totalArticles: (state) => state.lines.calculateTotalArticles(),
-        // Calculer le prix total des articles dans le panier
-        totalArticlesPrice: (state) => state.lines.calculateTotalArticlesPrice(),
-        // Obtenir le prix de livraison
-        shipmentPrice: (state) => state.shipment.price,
-        // Calculer le prix total (articles + livraison) dans le panier
-        totalPrice: (state) => state.lines.calculateTotalArticlesPrice() + state.shipment.price
+        totalArticles: state => state.lines.calculateTotalArticles(),
+        totalArticlesPrice: state => state.lines.calculateTotalArticlesPrice(),
+        shipmentPrice: state => state.shipment.price,
+        totalPrice: state => state.lines.calculateTotalArticlesPrice() + state.shipment.price
     }
 });
 
