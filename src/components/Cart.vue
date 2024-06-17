@@ -12,7 +12,7 @@
                 </tr>
             </thead>
             <tbody id="cartBody">
-                <tr v-for="line in cart.lines.lines" :key="line.name">
+                <tr v-for="line in cart.lines.lines" :key="line.id"> <!--line.name-->
                     <td :style="{ color: '#000000' }">{{ line.title }}</td>
                     <td :style="{ color: '#000000' }">{{ line.quantity }}</td>
                     <td :style="{ color: '#000000' }">{{ line.unitPrice ? line.unitPrice.toFixed(2) : '0.00' }}€</td>

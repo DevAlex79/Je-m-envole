@@ -39,9 +39,9 @@ export default {
     },
     data() {
         return {
-            article: {}, // Initialisez l'objet article avec des données vides
+            article: {}, // Initialise l'objet article avec des données vides
             showSuccessMessage: false,
-            cart: useCartStore(), // Utilisez le store dans la propriété cart
+            cart: useCartStore(), // Utilise le store dans la propriété cart
         };
     },
     methods: {
@@ -65,8 +65,10 @@ export default {
         },
         addToCart(article) {
             console.log('Adding to cart:', article);
+            // Ajouter le prix unitaire au produit avant de l'ajouter au panier
+            const product = { ...article, unitPrice: article.price };
             // Appeler la méthode addProductToCart du store via la propriété cart
-            this.cart.addProductToCart(article);
+            this.cart.addProductToCart(product);
 
             // Afficher le message de succès
             this.showSuccessMessage = true;

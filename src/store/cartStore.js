@@ -6,29 +6,49 @@ export const useCartStore = defineStore('cart', {
     state: () => ({
         lines: new Lines(),
         //shipment: import('../models/Shipment').then(({ default: shipment }) => shipment)
-        shipment: shipment
+        //shipment: shipment
+        shipment: {
+            type: 'relais',
+            price: 5  // Initialisation par défaut, ou chargez depuis le stockage local
+        }
     }),
     actions: {
         addProductToCart(product) {
             console.log('Product to add:', product);
-            const existingLine = this.lines.lines.find(line => line.name === product.name);
+            //const existingLine = this.lines.lines.find(line => line.name === product.name);
+            const existingLine = this.lines.lines.find(line => line.id === product.id);
             if (existingLine) {
                 existingLine.quantity += 1;
                 existingLine.total = existingLine.unitPrice * existingLine.quantity;
             } else {
-                product.quantity = product.quantity || 1;
-                product.total = product.unitPrice ? product.quantity * product.unitPrice : 0;
+                //product.quantity = product.quantity || 1;
+                product.quantity = 1;
+                product.unitPrice = product.unitPrice || 0;
+                product.total = product.unitPrice * product.quantity;
                 this.lines.addLine(product);
             }
+            console.log('Cart after addition:', this.lines.lines);
             this.saveCartToLocalStorage();
         },
         removeProductFromCart(product) {
             this.lines.removeLine(product);
+            console.log('Cart after removal:', this.lines.lines);
             this.saveCartToLocalStorage();
         },
         updateShipmentType(type) {
             this.shipment.type = type;
+            this.shipment.price = this.calculateShipmentPrice(type); // Update shipment price
             this.saveCartToLocalStorage();
+        },
+        calculateShipmentPrice(type) {
+            switch (type) {
+                case 'relais':
+                    return 5;
+                case 'domicile':
+                    return 12;
+                default:
+                    return 0;
+            }
         },
         saveCartToLocalStorage() {
             localStorage.setItem('cart', JSON.stringify(this.lines.lines));
@@ -42,16 +62,30 @@ export const useCartStore = defineStore('cart', {
                 parsedCart.forEach(item => {
                     const existingLine = this.lines.lines.find(line => line.id === item.id);
                     if (existingLine) {
-                        existingLine.quantity += item.quantity;
+                        existingLine.quantity = item.quantity;
                         existingLine.total = existingLine.unitPrice * existingLine.quantity;
                     } else {
                         this.lines.addLine(item);
                     }
                 });
             }
-            if (shipment) {
+            /*if (shipment) {
                 const parsedShipment = JSON.parse(shipment);
                 this.shipment.type = parsedShipment.type || 'relais';
+                this.shipment.price = this.calculateShipmentPrice(this.shipment.type); // Update shipment price
+            }*/
+            if (shipment) {
+                try {
+                    const parsedShipment = JSON.parse(shipment);
+                    if (parsedShipment.type) {
+                        this.shipment.type = parsedShipment.type;
+                    }
+                    if (parsedShipment.price) {
+                        this.shipment.price = parsedShipment.price;
+                    }
+                } catch (error) {
+                    console.error('Error parsing shipment from localStorage:', error);
+                }
             }
         },
         initShipment() {
@@ -59,6 +93,19 @@ export const useCartStore = defineStore('cart', {
         }
     },
     getters: {
+        //totalArticles: state => state.lines.calculateTotalArticles(),
+        /*totalArticles: state => {
+            const total = state.lines.calculateTotalArticles();
+            console.log('Total Articles:', total);
+            return total;
+        },
+        totalArticlesPrice: state => state.lines.calculateTotalArticlesPrice(),
+        shipmentPrice: state => state.shipment.price,
+        totalPrice: state => {
+            const total = state.lines.calculateTotalArticlesPrice() + state.shipment.price;
+            console.log('Total Price:', total);
+            return total;
+        }*/
         totalArticles: state => state.lines.calculateTotalArticles(),
         totalArticlesPrice: state => state.lines.calculateTotalArticlesPrice(),
         shipmentPrice: state => state.shipment.price,
