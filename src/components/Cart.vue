@@ -29,7 +29,7 @@
             </tfoot>
         </table>
 
-        <div class="label">
+        <div class="label" v-if="cart.shipment">
             <label>
                 <input type="radio" name="livraison-type" value="relais" @change="updateShipmentType('relais')" :checked="cart.shipment.type === 'relais'">
                 Relais Colis (5€)
@@ -73,6 +73,7 @@
 <script>
 import { useCartStore } from '@/store/cartStore';
 //import { Line } from '@/models/Line'
+import { computed } from 'vue';
 
 export default {
     name: 'Cart',
@@ -99,10 +100,10 @@ export default {
             addRow,
             removeProductFromCart,
             updateShipmentType,
-            totalArticles: cart.totalArticles,
-            totalArticlesPrice: cart.totalArticlesPrice,
-            shipmentPrice: cart.shipmentPrice,
-            totalPrice: cart.totalPrice
+            totalArticles: computed(() => cart.totalArticles),
+            totalArticlesPrice: computed(() => cart.totalArticlesPrice),
+            shipmentPrice: computed(() => cart.shipmentPrice),
+            totalPrice: computed(() => cart.totalPrice)
         };
     },
     /*computed: {

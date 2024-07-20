@@ -1,6 +1,28 @@
-import { reactive, computed } from 'vue';
+import { reactive, computed, watchEffect } from 'vue';
 
 const shipment = reactive({
+    type: 'relais',
+    price: 5
+});
+
+watchEffect(() => {
+    shipment.price = calculatePrice(shipment.type);
+});
+
+function calculatePrice(type) {
+    switch (type) {
+        case 'relais':
+            return 5;
+        case 'domicile':
+            return 12;
+        default:
+            return 0;
+    }
+}
+
+export default shipment;
+
+/*const shipment = reactive({
     type: 'relais', // Par défaut à relais
     calculatePrice() {
         switch (this.type) {
@@ -15,7 +37,7 @@ const shipment = reactive({
     price: computed(() => shipment.calculatePrice())
 });
 
-export default shipment;
+export default shipment; */
 
 
 /*// Modèle livraison

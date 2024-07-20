@@ -1,16 +1,16 @@
 import { defineStore } from "pinia";
+import { reactive } from "vue";
 import { Lines } from '../models/Lines';
 import shipment from '../models/Shipment';
 
 export const useCartStore = defineStore('cart', {
     state: () => ({
-        lines: new Lines(),
-        //shipment: import('../models/Shipment').then(({ default: shipment }) => shipment)
-        //shipment: shipment
-        shipment: {
+        lines: reactive(new Lines()),
+        shipment: shipment
+        /*shipment: reactive({
             type: 'relais',
-            price: 5  // Initialisation par défaut, ou chargez depuis le stockage local
-        }
+            price: 5  // Initialisation par défaut, ou charger depuis le stockage local
+        })*/
     }),
     actions: {
         addProductToCart(product) {
@@ -40,7 +40,7 @@ export const useCartStore = defineStore('cart', {
             this.shipment.price = this.calculateShipmentPrice(type); // Update shipment price
             this.saveCartToLocalStorage();
         },
-        calculateShipmentPrice(type) {
+        /*calculateShipmentPrice(type) {
             switch (type) {
                 case 'relais':
                     return 5;
@@ -49,14 +49,18 @@ export const useCartStore = defineStore('cart', {
                 default:
                     return 0;
             }
-        },
+        },*/
         saveCartToLocalStorage() {
             localStorage.setItem('cart', JSON.stringify(this.lines.lines));
-            localStorage.setItem('shipment', JSON.stringify(this.shipment));
+            //localStorage.setItem('shipment', JSON.stringify(this.shipment));
+            localStorage.setItem('shipment', JSON.stringify({
+                type: this.shipment.type,
+                price: this.shipment.price
+            }));
         },
         loadCartFromLocalStorage() {
             const cart = localStorage.getItem('cart');
-            const shipment = localStorage.getItem('shipment');
+            const shipmentData = localStorage.getItem('shipment');
             if (cart) {
                 const parsedCart = JSON.parse(cart);
                 parsedCart.forEach(item => {
@@ -69,12 +73,8 @@ export const useCartStore = defineStore('cart', {
                     }
                 });
             }
+            
             /*if (shipment) {
-                const parsedShipment = JSON.parse(shipment);
-                this.shipment.type = parsedShipment.type || 'relais';
-                this.shipment.price = this.calculateShipmentPrice(this.shipment.type); // Update shipment price
-            }*/
-            if (shipment) {
                 try {
                     const parsedShipment = JSON.parse(shipment);
                     if (parsedShipment.type) {
@@ -83,6 +83,16 @@ export const useCartStore = defineStore('cart', {
                     if (parsedShipment.price) {
                         this.shipment.price = parsedShipment.price;
                     }
+                } catch (error) {
+                    console.error('Error parsing shipment from localStorage:', error);
+                }
+            }*/
+
+            if (shipmentData) {
+                try {
+                    const parsedShipment = JSON.parse(shipmentData);
+                    this.shipment.type = parsedShipment.type || 'relais';
+                    this.shipment.price = parsedShipment.price || 5;
                 } catch (error) {
                     console.error('Error parsing shipment from localStorage:', error);
                 }
