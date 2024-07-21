@@ -18,11 +18,12 @@ export const useCartStore = defineStore('cart', {
             //const existingLine = this.lines.lines.find(line => line.name === product.name);
             const existingLine = this.lines.lines.find(line => line.id === product.id);
             if (existingLine) {
-                existingLine.quantity += 1;
+                //existingLine.quantity += 1;
+                existingLine.quantity += product.quantity;
                 existingLine.total = existingLine.unitPrice * existingLine.quantity;
             } else {
                 //product.quantity = product.quantity || 1;
-                product.quantity = 1;
+               // product.quantity = 1;
                 product.unitPrice = product.unitPrice || 0;
                 product.total = product.unitPrice * product.quantity;
                 this.lines.addLine(product);
@@ -40,16 +41,10 @@ export const useCartStore = defineStore('cart', {
             this.shipment.price = this.calculateShipmentPrice(type); // Update shipment price
             this.saveCartToLocalStorage();
         },
-        /*calculateShipmentPrice(type) {
-            switch (type) {
-                case 'relais':
-                    return 5;
-                case 'domicile':
-                    return 12;
-                default:
-                    return 0;
-            }
-        },*/
+        clearCart() {
+            this.lines.lines = [];
+            this.saveCartToLocalStorage();
+        },
         saveCartToLocalStorage() {
             localStorage.setItem('cart', JSON.stringify(this.lines.lines));
             //localStorage.setItem('shipment', JSON.stringify(this.shipment));

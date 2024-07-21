@@ -12,6 +12,14 @@
                     <h1>{{ article.title }}</h1>
                     <p>{{ article.description }}</p>
                     <p class="price">Prix: <span class="price-value">{{ article.price }} €</span></p>
+
+                    <!-- Ajout du sélecteur de quantité -->
+                    <label for="quantity">Quantité:</label>
+                    <select id="quantity" v-model="quantity">
+                        <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+                    </select>
+
+                    <!-- Bouton d'ajout au panier -->
                     <button :class="getButtonClass(article.category)" @click="addToCart(article)">Ajouter au
                         panier</button>
                 </div>
@@ -42,6 +50,7 @@ export default {
             article: {}, // Initialise l'objet article avec des données vides
             showSuccessMessage: false,
             cart: useCartStore(), // Utilise le store dans la propriété cart
+            quantity: 1 // Quantité par défaut
         };
     },
     methods: {
@@ -66,7 +75,7 @@ export default {
         addToCart(article) {
             console.log('Adding to cart:', article);
             // Ajouter le prix unitaire au produit avant de l'ajouter au panier
-            const product = { ...article, unitPrice: article.price };
+            const product = { ...article, unitPrice: article.price, quantity: this.quantity };
             // Appeler la méthode addProductToCart du store via la propriété cart
             this.cart.addProductToCart(product);
 
@@ -215,7 +224,32 @@ export default {
     /* Définit la couleur du texte en noir */
 }
 
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #44D382;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+select {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
 button {
+    margin-top: 10px;
     color: #fff;
     border: none;
     padding: 10px 20px;

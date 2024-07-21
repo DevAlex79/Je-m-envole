@@ -26,6 +26,11 @@
                         <button @click="addRow" class="add-row-button">Ajouter une ligne</button>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="5" style="text-align: right;">
+                        <button @click="clearCart" class="clear-cart-button">Vider le panier</button>
+                    </td>
+                </tr>
             </tfoot>
         </table>
 
@@ -72,14 +77,12 @@
 
 <script>
 import { useCartStore } from '@/store/cartStore';
-//import { Line } from '@/models/Line'
 import { computed } from 'vue';
 
 export default {
     name: 'Cart',
     setup() {
         const cart = useCartStore();
-        //cart.loadCartFromLocalStorage(); // Charger le panier depuis le stockage local
         cart.initShipment();
 
         function addRow() {
@@ -95,11 +98,16 @@ export default {
             cart.updateShipmentType(type);
         }
 
+        function clearCart() {
+            cart.clearCart();
+        }
+
         return {
             cart,
             addRow,
             removeProductFromCart,
             updateShipmentType,
+            clearCart,
             totalArticles: computed(() => cart.totalArticles),
             totalArticlesPrice: computed(() => cart.totalArticlesPrice),
             shipmentPrice: computed(() => cart.shipmentPrice),
@@ -211,6 +219,16 @@ th {
     /* Curseur de la main */
     font-weight: bold;
     /* Texte en gras */
+}
+
+.clear-cart-button {
+    background-color: #FF0000; 
+    color: #FFF; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .totals-container {
