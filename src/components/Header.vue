@@ -3,7 +3,7 @@
         <img src="/src/svg/Logo.svg" alt="logo">
     </div>
     <header>
-        <div id="menu">
+        <nav id="menu">
             <div class="menu">
                 <!--  Home ? A VOIR -->
                 <router-link to="/" exact class="menu-item">
@@ -16,16 +16,28 @@
                     <p :class="{ 'active': $route.path === '/contact' }">Contact</p>
                 </router-link>
                 <router-link to="/cart" exact class="menu-item">
-                    <p :class="{ 'active': $route.path === '/cart' }">Panier</p>
+                    <p :class="{ 'active': $route.path === '/cart' }">Panier<span v-if="totalItems > 0" class="cart-badge">{{ totalItems }}</span></p>
                 </router-link>
             </div>
-        </div>
+        </nav>
     </header>
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useCartStore } from '@/store/cartStore';
+
 export default {
-    // Pas de logique spécifique pour ce composant dans ce cas
+    setup() {
+        const cart = useCartStore();
+        const totalItems = computed(() => cart.totalItems);
+
+        console.log("Total items in cart:", totalItems.value); // Debug log
+
+        return {
+            totalItems
+        };
+    }
 }
 </script>
 
@@ -102,6 +114,20 @@ p {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+    position: relative;
+}
+
+.cart-badge {
+    /*background-color: red;*/
+    background-color: #6066FA;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    margin-left: 5px;
+    font-size: 12px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
 }
 
 .active {

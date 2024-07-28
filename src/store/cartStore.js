@@ -114,7 +114,8 @@ export const useCartStore = defineStore('cart', {
         totalArticles: state => state.lines.calculateTotalArticles(),
         totalArticlesPrice: state => state.lines.calculateTotalArticlesPrice(),
         shipmentPrice: state => state.shipment.price,
-        totalPrice: state => state.lines.calculateTotalArticlesPrice() + state.shipment.price
+        totalPrice: state => state.lines.calculateTotalArticlesPrice() + state.shipment.price,
+        totalItems: state => state.lines.lines.reduce((total, line) => total + line.quantity, 0) // Ajout de la méthode totalItems
     }
 });
 
