@@ -15,7 +15,7 @@
 
                     <!-- Ajout du sélecteur de quantité -->
                     <label for="quantity">Quantité:</label>
-                    <select id="quantity" v-model="quantity">
+                    <select id="quantity" v-model="quantity" :class="getSelectClass(article.category)">
                         <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
                     </select>
 
@@ -69,6 +69,15 @@ export default {
                 case 'Jardin': return 'button-jardin';
                 case 'Loisirs': return 'button-loisirs';
                 case 'Voyages': return 'button-voyages';
+                default: return '';
+            }
+        },
+        getSelectClass(category) {
+            switch (category) {
+                case 'Cuisine': return 'select-cuisine';
+                case 'Jardin': return 'select-jardin';
+                case 'Loisirs': return 'select-loisirs';
+                case 'Voyages': return 'select-voyages';
                 default: return '';
             }
         },
@@ -246,6 +255,22 @@ select {
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #ddd;
+}
+
+.select-cuisine {
+    background-color: #FEE6E7;
+}
+
+.select-jardin {
+    background-color: #eafaf1;
+}
+
+.select-loisirs {
+    background-color: #E9F9FB;
+}
+
+.select-voyages {
+    background-color: #fef4e7;
 }
 
 button {
