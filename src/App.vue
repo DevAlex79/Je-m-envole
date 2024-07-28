@@ -2,7 +2,14 @@
   <!--<div>-->
   <Header />
 
-  <router-view></router-view>
+  <!--<router-view></router-view>-->
+
+  <div id="app">
+        <router-view />
+        <div v-if="notification.show" :class="['notification', notification.type]">
+            {{ notification.message }}
+        </div>
+    </div>
 
   <Footer />
 
@@ -19,6 +26,8 @@ import SingleArticle from './components/SingleArticle.vue'
 import Contact from './components/Contact.vue'
 import Cart from './components/Cart.vue'
 //import { useCartStore } from './store/cartStore'
+import { useNotificationStore } from '@/store/notificationStore';
+
 
 export default {
   name: 'App',
@@ -36,7 +45,11 @@ export default {
     // Initialisez l'expédition lorsque le composant est monté
     useCartStore().initShipment();
   },*/
-
+  computed: {
+        notification() {
+            return useNotificationStore();
+        },
+    },
 }
 </script>
 
@@ -86,5 +99,35 @@ header {
   justify-content: center;
   /*gap: 20px;*/
   /* Espacement entre les éléments du menu */
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    background-color: #44D382;
+    color: #fff;
+}
+
+.notification.success {
+    /*background-color: #44D382;*/
+    background-color: #6066FA;
+}
+
+.notification.error {
+    background-color: #FA5158;
+}
+
+.notification.info {
+    background-color: #56CFE1;
+}
+
+.notification.warning {
+    background-color: #F39E30;
 }
 </style>

@@ -15,7 +15,7 @@ const routes = [
         component: Home,
     },
     {
-        path: "/article/:id", // Ajout un paramètre dynamique pour l'identifiant de l'article
+        path: "/article/:id", // Ajout d'un paramètre dynamique pour l'identifiant de l'article
         name: "SingleArticle", // Nom de la route
         component: SingleArticle, // Utilisation du composant Article pour cette route
         props: true // Active la transmission des paramètres en tant que propriétés

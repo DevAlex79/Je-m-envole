@@ -20,7 +20,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-import SingleArticle from '@/components/SingleArticle.vue';
+//import SingleArticle from '@/components/SingleArticle.vue';
 
 export default {
     name: 'Articles',
@@ -29,8 +29,8 @@ export default {
     //},
     components: {
         Header,
-        Footer,
-        SingleArticle
+        Footer
+       // SingleArticle
     },
     data() {
         return {

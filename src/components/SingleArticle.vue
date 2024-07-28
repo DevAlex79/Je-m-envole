@@ -37,6 +37,7 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import { useCartStore } from '@/store/cartStore';
+import { useNotificationStore } from '@/store/notificationStore'; // Import du store de notifications
 
 
 
@@ -48,7 +49,7 @@ export default {
     data() {
         return {
             article: {}, // Initialise l'objet article avec des données vides
-            showSuccessMessage: false,
+            //showSuccessMessage: false,
             cart: useCartStore(), // Utilise le store dans la propriété cart
             quantity: 1 // Quantité par défaut
         };
@@ -89,15 +90,22 @@ export default {
             this.cart.addProductToCart(product);
 
             // Afficher le message de succès
-            this.showSuccessMessage = true;
+            //this.showSuccessMessage = true;
+
+             // Utiliser le store de notifications pour afficher un message de succès
+            const notificationStore = useNotificationStore();
+            notificationStore.setNotification('Article ajouté au panier', 'success');
 
             // Cacher le message après quelques secondes
-            setTimeout(() => {
-                this.showSuccessMessage = false;
-            }, 3000);
+            //setTimeout(() => {
+                //this.showSuccessMessage = false;
+            //}, 3000);
 
             // Redirigez l'utilisateur vers la page du panier
-            this.$router.push({ name: 'Cart' });
+            //this.$router.push({ name: 'Cart' });
+
+            // Redirigez l'utilisateur vers la page des articles
+            this.$router.push({ name: 'Articles' });
         },
     },
     mounted() {
@@ -298,7 +306,7 @@ button {
     background-color: #F39E30;
 }
 
-.success-message {
+/*.success-message {
     position: fixed;
     top: 20px;
     right: 20px;
@@ -308,5 +316,5 @@ button {
     border-radius: 5px;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-}
+}*/
 </style>
