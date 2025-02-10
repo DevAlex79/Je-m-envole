@@ -381,3 +381,110 @@ footer {
   line-height: 26px; 
   letter-spacing: -0.27px;  
 }
+
+/* Styles pour les écrans larges (par défaut) sont déjà définis au-dessus */
+
+/* Écrans moyens (tablettes) */
+@media screen and (max-width: 1024px) {
+  #menu {
+      flex-direction: column; /* Le menu passe en colonne */
+      gap: 10px; /* Réduit les espaces entre les items */
+  }
+
+  .menu {
+      width: 100%; /* S'adapte à la largeur de l'écran */
+      justify-content: center; /* Centre les éléments */
+  }
+
+  .article {
+      width: 80%; /* Réduit la largeur des articles */
+      margin: 0 auto; /* Centre les articles */
+  }
+
+  footer {
+      flex-direction: column; /* Le footer s'affiche en colonne */
+      align-items: center;
+  }
+
+  .logo-small {
+      margin: 0 auto; /* Centre le logo */
+  }
+
+  .icones {
+      justify-content: center;
+      margin: 10px 0;
+  }
+}
+
+/* Écrans petits (mobiles) */
+@media screen and (max-width: 768px) {
+  body {
+      padding: 10px; /* Réduit les marges */
+  }
+
+  #menu {
+      flex-direction: column; /* Le menu s'empile */
+      align-items: center; /* Centre les éléments */
+  }
+
+  .menu {
+      width: 100%; /* Prend toute la largeur */
+      margin: 20px 0; /* Ajoute un espace vertical */
+  }
+
+  .menu p {
+      font-size: 12px; /* Réduit la taille des textes du menu */
+  }
+
+  .article {
+      width: 100%; /* Les articles prennent toute la largeur */
+      margin-bottom: 15px; /* Ajoute un espacement entre eux */
+  }
+
+  .texte-article p {
+      font-size: 12px; /* Réduit la taille des descriptions */
+  }
+
+  footer {
+      flex-direction: column; /* Footer en colonne */
+      padding: 10px; /* Ajoute de l'espace */
+  }
+
+  .copyright p {
+      text-align: center; /* Texte centré pour les copyrights */
+      font-size: 10px; /* Réduit la taille des copyrights */
+  }
+}
+
+/* Écrans très petits (mobiles < 480px) */
+@media screen and (max-width: 480px) {
+  #menu {
+      font-size: 10px; /* Encore plus petit pour les très petits écrans */
+  }
+
+  .menu p {
+      font-size: 10px;
+  }
+
+  .article img {
+      width: 100%; /* Les images remplissent l'écran */
+      height: auto; /* Conserve le ratio */
+  }
+
+  .categorie-cuisine,
+  .categorie-jardin,
+  .categorie-loisirs,
+  .categorie-voyages {
+      font-size: 10px; /* Réduit la taille des catégories */
+      padding: 0px 5px; /* Réduit l'espacement */
+  }
+
+  footer {
+      padding: 5px;
+  }
+
+  .icones {
+      margin: 5px 0;
+  }
+}
+

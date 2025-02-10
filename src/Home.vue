@@ -176,4 +176,6 @@ img {
     border-radius: 5px 5px 0px 0px;
     /*object-fit: cover; /* Ajuste la taille de l'image pour qu'elle remplisse son conteneur */
 }
+
+
 </style>

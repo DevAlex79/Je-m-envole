@@ -17,10 +17,17 @@
                     <td :style="{ color: '#000000' }">{{ line.quantity }}</td>
                     <td :style="{ color: '#000000' }">{{ line.unitPrice ? line.unitPrice.toFixed(2) : '0.00' }}€</td>
                     <td :style="{ color: '#000000' }">{{ line.total ? line.total.toFixed(2) : '0.00' }}€</td>
-                    <td><button @click="removeProductFromCart(line)" class="remove-row">Supprimer</button></td>
+                    <!-- <td><button @click="removeProductFromCart(line)" class="remove-row">Supprimer</button></td> -->
+                    <td>
+                        <button @click="removeProductFromCart(line)" class="remove-row">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+
                 </tr>
             </tbody>
             <tfoot>
+                
                 <tr>
                     <td colspan="5">
                         <button @click="addRow" class="add-row-button">Ajouter une ligne</button>
@@ -31,6 +38,14 @@
                         <button @click="clearCart" class="clear-cart-button">Vider le panier</button>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="5" style="text-align: right;">
+                        <button @click="validateCart" class="validate-cart-button">
+                        Valider mon panier
+                    </button>
+                    </td>
+                </tr>             
+                
             </tfoot>
         </table>
 
@@ -58,7 +73,7 @@
                 <tbody>
                     <tr>
                         <td style="color: #000000;">Total Articles:</td>
-                        <td><span id="total-nombre-articles" :style="{ color: '#000000' }">{{ totalArticles }}</span>
+                        <td><span id="total-nombre-articles" :style="{ color: '#6066FA' }">{{ totalArticles }}</span>
                         </td>
                         <td style="color: #000000;">Prix Total Articles:</td>
                         <td><span id="prix-total-articles" :style="{ color: '#000000' }">{{
@@ -78,6 +93,7 @@
 <script>
 import { useCartStore } from '@/store/cartStore';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
     name: 'Cart',
@@ -102,6 +118,16 @@ export default {
             cart.clearCart();
         }
 
+        const router = useRouter();
+
+        function validateCart() {
+            if (cart.lines.lines.length === 0) {
+                alert("Votre panier est vide !");
+                return;
+            }
+            router.push({ name: 'Checkout' }); // avoir une route Checkout dans votre `router/index.js`
+        }
+
         return {
             cart,
             addRow,
@@ -111,7 +137,8 @@ export default {
             totalArticles: computed(() => cart.totalArticles),
             totalArticlesPrice: computed(() => cart.totalArticlesPrice),
             shipmentPrice: computed(() => cart.shipmentPrice),
-            totalPrice: computed(() => cart.totalPrice)
+            totalPrice: computed(() => cart.totalPrice),
+            validateCart
         };
     },
     /*computed: {
@@ -195,14 +222,31 @@ th {
 
 }
 
-.remove-row {
+/* .remove-row {
     cursor: pointer;
     color: red;
     font-weight: bold;
     border: none;
     background: none;
     font-size: larger;
+} */
+
+.remove-row {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: #6066FA;
 }
+
+.remove-row i {
+    font-size: 18px;
+}
+
+.remove-row:hover {
+    color: darkred;
+}
+
 
 .add-row-button {
     background-color: #6066FA;
@@ -222,13 +266,35 @@ th {
 }
 
 .clear-cart-button {
-    background-color: #FF0000; 
-    color: #FFF; 
+    background-color: #FEE6E7; 
+    color: #FA5158; 
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
+}
+
+.validate-cart-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.validate-cart-button {
+    background-color: #F0F1FF;
+    color: #6066FA;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.validate-cart-button:hover {
+    background-color: #6066FA;
+    color: #F0F1FF;
 }
 
 .totals-container {
@@ -279,6 +345,8 @@ label {
     padding: 5px;
     color: #000000 !important;
 }
+
+
 
 
 
