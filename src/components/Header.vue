@@ -18,7 +18,17 @@
                 <router-link to="/cart" exact class="menu-item">
                     <p :class="{ 'active': $route.path === '/cart' }">Panier<span v-if="totalItems > 0" class="cart-badge">{{ totalItems }}</span></p>
                 </router-link>
+                <!-- Affichage conditionnel des boutons en fonction de l'authentification -->
+                <div class="auth-links">
+                    <router-link to="/register" v-if="!isAuthenticated" class="menu-item">S'enregistrer</router-link>
+                    <router-link to="/login" v-if="!isAuthenticated" class="menu-item">Se connecter</router-link>
+                    <button @click="logout" v-if="isAuthenticated" class="logout-button">Déconnexion</button>
+                    <router-link to="/profile" v-if="isAuthenticated" class="menu-item">Mon Profil</router-link>
+
+                </div>
+                
             </div>
+
         </nav>
     </header>
 </template>
@@ -26,6 +36,8 @@
 <script>
 import { computed } from 'vue';
 import { useCartStore } from '@/store/cartStore';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
     setup() {
@@ -34,9 +46,31 @@ export default {
 
         console.log("Total items in cart:", totalItems.value); // Debug log
 
+        const router = useRouter();
+        // const isAuthenticated = ref(false);
+        const isAuthenticated = ref(!!localStorage.getItem('token'));
+
+
+        // Vérifier si un token est stocké
+        function checkAuth() {
+            isAuthenticated.value = !!localStorage.getItem('token');
+        }
+
+        function logout() {
+            localStorage.removeItem('token'); // Supprime le token
+            isAuthenticated.value = false;
+            router.push({ name: 'Login' }); // Redirige vers la connexion
+        }
+
+        onMounted(checkAuth); // Vérifier l'authentification au montage du composant
+
         return {
-            totalItems
+            totalItems,
+            isAuthenticated,
+            logout
         };
+
+        
     }
 }
 </script>
@@ -115,6 +149,26 @@ p {
     font-weight: bold;
     cursor: pointer;
     position: relative;
+}
+
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 20px;
+}
+
+.logout-button {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: darkred;
 }
 
 .cart-badge {

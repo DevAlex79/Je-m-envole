@@ -1,8 +1,12 @@
 <template>
     <div class="checkout-container">
-        <h1>Validation de votre commande</h1>
+        <h1>Résumé de votre commande</h1>
 
-        <table class="checkout-table">
+        <!-- Si le panier est vide -->
+        <p v-if="!cart || cart.length === 0">Votre panier est vide.</p>
+
+        <!-- Si le panier contient des articles -->
+        <table v-else>
             <thead>
                 <tr>
                     <th>Article</th>
@@ -12,106 +16,166 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="line in cart.lines.lines" :key="line.id">
-                    <td>{{ line.title }}</td>
-                    <td>{{ line.quantity }}</td>
-                    <td>{{ line.unitPrice ? line.unitPrice.toFixed(2) : '0.00' }}€</td>
-                    <td>{{ line.total ? line.total.toFixed(2) : '0.00' }}€</td>
+                <tr v-for="item in cart" :key="item.id">
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.unitPrice.toFixed(2) }}€</td>
+                    <td>{{ (item.unitPrice * item.quantity).toFixed(2) }}€</td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="checkout-summary">
-            <p><strong>Total articles :</strong> {{ totalArticlesPrice.toFixed(2) }} €</p>
-            <p><strong>Frais de livraison :</strong> {{ shipmentPrice.toFixed(2) }} €</p>
-            <p><strong>Total général :</strong> {{ totalPrice.toFixed(2) }} €</p>
+        <!-- Mode de livraison -->
+        <div v-if="cart && cart.length > 0" class="shipment-container">
+            <h2>Mode de livraison</h2>
+            <p>Type: <strong>{{ shipmentType }}</strong></p>
+            <p>Prix de livraison: <strong>{{ shipmentPrice.toFixed(2) }}€</strong></p>
         </div>
 
-        <div class="checkout-shipment">
-            <h3>Mode de livraison choisi :</h3>
-            <p>{{ cart.shipment.type === 'relais' ? 'Relais Colis (5€)' : 'À Domicile (12€)' }}</p>
+        <!-- Total de la commande -->
+        <div v-if="cart && cart.length > 0" class="total-container">
+            <h2>Total à payer</h2>
+            <p><strong>{{ totalPrice.toFixed(2) }}€</strong></p>
         </div>
 
-        <button class="confirm-order-button" @click="confirmOrder">Confirmer ma commande</button>
+        <!-- Bouton de validation -->
+        <button v-if="cart && cart.length > 0" @click="confirmOrder" class="confirm-button">
+            Confirmer ma commande
+        </button>
     </div>
 </template>
 
 <script>
-import { useCartStore } from '@/store/cartStore';
-import { computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
-    name: 'Checkout',
     setup() {
-        const cart = useCartStore();
         const router = useRouter();
+        const cart = ref(null);
+        const totalPrice = ref(0);
+        const shipmentPrice = ref(0);
+        const shipmentType = ref('');
 
-        function confirmOrder() {
-            alert('Commande confirmée ! 🎉');
-            cart.clearCart(); // Vider le panier après la validation
-            router.push({ name: 'Articles' }); // Rediriger vers la page Articles
+        // 🔹 Charger le panier sécurisé
+        async function loadCart() {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                alert("Vous devez être connecté pour accéder au panier.");
+                router.push({ name: 'Login' });
+                return;
+            }
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/cart', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) throw new Error("Impossible de charger le panier.");
+
+                const data = await response.json();
+                cart.value = data.cart;
+                totalPrice.value = data.totalPrice;
+                shipmentPrice.value = data.shipmentPrice;
+                shipmentType.value = data.shipmentType;
+
+            } catch (error) {
+                alert(error.message);
+                router.push({ name: 'Articles' });
+            }
         }
 
-        return {
-            cart,
-            totalArticlesPrice: computed(() => cart.totalArticlesPrice),
-            shipmentPrice: computed(() => cart.shipmentPrice),
-            totalPrice: computed(() => cart.totalPrice),
-            confirmOrder
-        };
+        // 🔹 Validation de la commande
+        async function confirmOrder() {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                alert("Vous devez être connecté pour valider votre commande.");
+                router.push({ name: 'Login' });
+                return;
+            }
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        cart: cart.value,
+                        totalPrice: totalPrice.value
+                    })
+                });
+
+                if (!response.ok) throw new Error("Erreur lors de la validation de la commande.");
+
+                alert('Commande confirmée 🎉');
+                localStorage.removeItem('cart'); // Nettoyer le panier
+                router.push({ name: 'Articles' }); // Rediriger
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        onMounted(loadCart); // Charger les infos du panier au montage
+
+        return { cart, totalPrice, shipmentPrice, shipmentType, confirmOrder };
     }
 };
 </script>
 
 <style scoped>
 .checkout-container {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
-    padding: 20px;
     text-align: center;
-    font-family: Poppins;
+    padding: 20px;
 }
 
-.checkout-table {
+h1, h2 {
+    color: #333;
+}
+
+table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.checkout-table th, .checkout-table td {
-    border: 1px solid #000;
+th, td {
+    border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
 }
 
-.checkout-table th {
+th {
     background-color: #f2f2f2;
 }
 
-.checkout-summary {
+.total-container, .shipment-container {
     margin-top: 20px;
     font-size: 18px;
 }
 
-.checkout-shipment {
-    margin-top: 20px;
-    font-size: 16px;
-}
-
-.confirm-order-button {
+.confirm-button {
     background-color: #28a745;
     color: white;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
     margin-top: 20px;
 }
 
-.confirm-order-button:hover {
+.confirm-button:hover {
     background-color: #218838;
 }
 </style>
