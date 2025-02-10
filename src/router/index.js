@@ -6,6 +6,8 @@ import Articles from '@/components/Articles.vue';
 import SingleArticle from '@/components/SingleArticle.vue';
 import Contact from '@/components/Contact.vue';
 import Cart from '@/components/Cart.vue';
+import Checkout from '@/components/Checkout.vue';
+
 
 const routes = [
 
@@ -35,6 +37,13 @@ const routes = [
         name: "Cart",
         component: Cart,
     },
+
+    {
+        path: "/checkout",
+        name: "Checkout",
+        component: Checkout,
+    }
+    
 
     // Ajout d'autres routes si nécessaire
 ];
