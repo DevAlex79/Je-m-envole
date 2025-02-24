@@ -23,7 +23,7 @@
                     <router-link to="/register" v-if="!isAuthenticated" class="menu-item">S'enregistrer</router-link>
                     <router-link to="/login" v-if="!isAuthenticated" class="menu-item">Se connecter</router-link>
                     <button @click="logout" v-if="isAuthenticated" class="logout-button">Déconnexion</button>
-                    <router-link to="/profile" v-if="isAuthenticated" class="menu-item">Mon Profil</router-link>
+                    <router-link to="/dashboard" v-if="isAuthenticated" class="menu-item">Mon Profil</router-link>
 
                 </div>
                 

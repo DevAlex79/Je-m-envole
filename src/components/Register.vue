@@ -2,11 +2,13 @@
     <div class="auth-container">
         <h1>Inscription</h1>
         <form @submit.prevent="register">
-            <input type="text" v-model="name" placeholder="Nom" required>
+            <input type="text" v-model="username" placeholder="Nom d'utilisateur" required>
             <input type="email" v-model="email" placeholder="Email" required>
             <input type="password" v-model="password" placeholder="Mot de passe" required>
+            <input type="password" v-model="password_confirmation" placeholder="Confirmer le mot de passe" required>
             <button type="submit">S'inscrire</button>
         </form>
+        <p v-if="error" class="error">{{ error }}</p>
         <p>Déjà un compte ? <router-link to="/login">Se connecter</router-link></p>
     </div>
 </template>
@@ -18,9 +20,11 @@ import { useRouter } from 'vue-router';
 export default {
     setup() {
         const router = useRouter();
-        const name = ref('');
+        const username = ref('');
         const email = ref('');
         const password = ref('');
+        const password_confirmation = ref('');
+        const error = ref('');
 
         async function register() {
             try {
@@ -28,9 +32,10 @@ export default {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        name: name.value,
+                        username: username.value,  // 🔹 Correction ici (envoyer "username" et non "name")
                         email: email.value,
-                        password: password.value
+                        password: password.value,
+                        password_confirmation: password_confirmation.value // 🔹 Ajout du champ de confirmation
                     })
                 });
 
@@ -40,11 +45,12 @@ export default {
                 alert('Inscription réussie 🎉 Connectez-vous maintenant !');
                 router.push({ name: 'Login' }); // Redirection vers la connexion
             } catch (error) {
-                alert(error.message);
+                console.error("Erreur d'inscription :", error);
+                error.value = error.message;
             }
         }
 
-        return { name, email, password, register };
+        return { username, email, password, password_confirmation, register, error };
     }
 };
 </script>
@@ -69,5 +75,8 @@ button {
 }
 button:hover {
     background-color: #218838;
+}
+.error {
+    color: red;
 }
 </style>

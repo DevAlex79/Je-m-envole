@@ -41,13 +41,17 @@ export const useCartStore = defineStore('cart', {
             this.shipment.price = this.calculateShipmentPrice(type); // Update shipment price
             this.saveCartToLocalStorage();
         },
+        updateShipmentType(type) {
+            this.shipment.type = type;
+            this.shipment.price = type === 'domicile' ? 12 : 5; // 12€ pour domicile, 5€ pour relais
+            this.saveCartToLocalStorage(); // Sauvegarder dans localStorage
+        },
         clearCart() {
             this.lines.lines = [];
             this.saveCartToLocalStorage();
         },
         saveCartToLocalStorage() {
             localStorage.setItem('cart', JSON.stringify(this.lines.lines));
-            //localStorage.setItem('shipment', JSON.stringify(this.shipment));
             localStorage.setItem('shipment', JSON.stringify({
                 type: this.shipment.type,
                 price: this.shipment.price
@@ -92,6 +96,7 @@ export const useCartStore = defineStore('cart', {
                     console.error('Error parsing shipment from localStorage:', error);
                 }
             }
+
         },
         initShipment() {
             this.loadCartFromLocalStorage();

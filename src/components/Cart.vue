@@ -14,7 +14,15 @@
             <tbody id="cartBody">
                 <tr v-for="line in cart.lines.lines" :key="line.id"> <!--line.name-->
                     <td :style="{ color: '#000000' }">{{ line.title }}</td>
-                    <td :style="{ color: '#000000' }">{{ line.quantity }}</td>
+                    <!-- <td :style="{ color: '#000000' }">{{ line.quantity }}</td> -->
+                    <td>
+                        <div class="quantity-container">
+                            <button @click="decreaseQuantity(line)" class="quantity-btn">-</button>
+                            <span class="quantity-display">{{ line.quantity }}</span>
+                            <button @click="increaseQuantity(line)" class="quantity-btn">+</button>
+                            
+                        </div>
+                    </td>
                     <td :style="{ color: '#000000' }">{{ line.unitPrice ? line.unitPrice.toFixed(2) : '0.00' }}€</td>
                     <td :style="{ color: '#000000' }">{{ line.total ? line.total.toFixed(2) : '0.00' }}€</td>
                     <!-- <td><button @click="removeProductFromCart(line)" class="remove-row">Supprimer</button></td> -->
@@ -30,7 +38,7 @@
                 
                 <tr>
                     <td colspan="5">
-                        <button @click="addRow" class="add-row-button">Ajouter une ligne</button>
+                        <button @click="goToArticles" class="add-row-button">Ajouter un article</button>
                     </td>
                 </tr>
                 <tr>
@@ -48,7 +56,8 @@
                 
             </tfoot>
         </table>
-
+        
+        <!-- Sélection du mode de livraison -->
         <div class="label" v-if="cart.shipment">
             <label>
                 <input type="radio" name="livraison-type" value="relais" @change="updateShipmentType('relais')" :checked="cart.shipment.type === 'relais'">
@@ -58,14 +67,6 @@
                 <input type="radio" name="livraison-type" value="domicile" @change="updateShipmentType('domicile')" :checked="cart.shipment.type === 'domicile'">
                 À Domicile (12€)
             </label>
-            <!--<label>
-                <input type="radio" name="livraison-type" value="relais" @change="updateShipmentType('relais')" :checked="cart.shipment.type.value === 'relais'">
-                Relais Colis (5€)
-            </label>
-            <label>
-                <input type="radio" name="livraison-type" value="domicile" @change="updateShipmentType('domicile')" :checked="cart.shipment.type.value === 'domicile'">
-                À Domicile (12€)
-            </label>-->
         </div>
 
         <div class="totals-container">
@@ -101,9 +102,22 @@ export default {
         const cart = useCartStore();
         cart.initShipment();
 
-        function addRow() {
-            const newLine = { title: 'Nouvel article', quantity: 1, unitPrice: 0, total: 0 };
-            cart.addProductToCart(newLine);
+        function goToArticles() {
+            router.push({ name: 'Articles' }); // Redirection vers la page Articles
+        }
+
+        function increaseQuantity(line) {
+            line.quantity++;
+            line.total = line.unitPrice * line.quantity;
+            cart.saveCartToLocalStorage();
+        }
+
+        function decreaseQuantity(line) {
+            if (line.quantity > 1) {
+                line.quantity--;
+                line.total = line.unitPrice * line.quantity;
+                cart.saveCartToLocalStorage();
+            }
         }
 
         function removeProductFromCart(line) {
@@ -125,12 +139,13 @@ export default {
                 alert("Votre panier est vide !");
                 return;
             }
-            router.push({ name: 'Checkout' }); // avoir une route Checkout dans votre `router/index.js`
+            router.push({ name: 'Checkout' }); // avoir une route Checkout dans `router/index.js`
         }
+
 
         return {
             cart,
-            addRow,
+            //addRow,
             removeProductFromCart,
             updateShipmentType,
             clearCart,
@@ -138,7 +153,10 @@ export default {
             totalArticlesPrice: computed(() => cart.totalArticlesPrice),
             shipmentPrice: computed(() => cart.shipmentPrice),
             totalPrice: computed(() => cart.totalPrice),
-            validateCart
+            validateCart,
+            goToArticles,
+            increaseQuantity,
+            decreaseQuantity
         };
     },
     /*computed: {
@@ -218,7 +236,7 @@ td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #F0F1FF;
 
 }
 
@@ -230,6 +248,35 @@ th {
     background: none;
     font-size: larger;
 } */
+
+.quantity-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espacement horizontal entre les éléments */
+}
+
+.quantity-btn {
+    background-color: #6066FA;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    margin: 0 8px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.quantity-btn:hover {
+    background-color: #4a50e1;
+}
+
+.quantity-display {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 30px; /* Assure un bon alignement */
+    text-align: center;
+}
 
 .remove-row {
     cursor: pointer;
@@ -263,6 +310,12 @@ th {
     /* Curseur de la main */
     font-weight: bold;
     /* Texte en gras */
+}
+
+.add-row-button:hover {
+    color: #6066FA;
+    background-color: #F0F1FF;
+    /* Couleur de fond au survol */
 }
 
 .clear-cart-button {
