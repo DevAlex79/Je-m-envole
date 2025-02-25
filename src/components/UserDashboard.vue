@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard">
-        <h1>Tableau de bord de {{ userName }}</h1>
-        <p>Bienvenue, {{ userName }} ! Consultez vos commandes et informations personnelles.</p>
+        <h1>Tableau de bord de <span class="user-name"> {{ userName }}</span></h1>
+        <p>Bienvenue, <span class="user-name">{{ userName }} ! </span> Consultez vos commandes et informations personnelles.</p>
         <button @click="logout" class="logout-btn">Se déconnecter</button>
 
         <h2>Historique de vos commandes</h2>
@@ -199,6 +199,12 @@ export default {
     text-align: center;
     padding: 20px;
 }
+
+.user-name {
+    color: #6066FA;
+    font-weight: bold;
+}
+
 
 .logout-btn {
     background-color: #6066FA;

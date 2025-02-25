@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard-container">
-        <h1>Tableau de bord de {{ sellerName }}</h1>
-        <p>Bienvenue, {{ sellerName }} !</p>
+        <h1>Tableau de bord de <span class="seller-name"> {{ sellerName }}</span></h1>
+        <p>Bienvenue, <span class="seller-name">{{ sellerName }} !</span></p>
         <button @click="logout" class="logout-btn">Se déconnecter</button>
 
         <h2>Créer un nouveau produit</h2>
@@ -219,6 +219,12 @@ export default {
     font-weight: bold;
     margin-top: 10px;
 }
+
+.seller-name {
+    color: #6066FA;
+    font-weight: bold;
+}
+
 
 .logout-btn {
     background-color: #6066FA;

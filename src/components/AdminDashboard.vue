@@ -1,7 +1,8 @@
 <template>
     <div class="dashboard-container">
-        <h1>Tableau de bord de {{ adminName }}</h1>
-        <p>Bienvenue, {{ adminName }} !</p>
+        <h1>Tableau de bord de <span class="admin-name">{{ adminName }}</span></h1>
+        <p>Bienvenue, <span class="admin-name">{{ adminName }}</span> !</p>
+
 
         <button @click="logout" class="logout-btn">Se déconnecter</button>
 
@@ -343,6 +344,11 @@ export default {
 
 .error { 
     color: red; 
+}
+
+.admin-name {
+    color: #6066FA;
+    font-weight: bold;
 }
 
 .logout-btn {
