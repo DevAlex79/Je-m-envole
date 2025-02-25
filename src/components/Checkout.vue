@@ -34,10 +34,10 @@
             </thead>
             <tbody>
                 <tr v-for="item in cart.lines.lines" :key="item.id">
-                    <td>{{ item.title }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.unitPrice ? item.unitPrice.toFixed(2) : '0.00' }}€</td>
-                    <td>{{ item.unitPrice && item.quantity ? (item.unitPrice * item.quantity).toFixed(2) : '0.00' }}€</td>
+                    <td><strong>{{ item.title }}</strong></td>
+                    <td><strong>{{ item.quantity }}</strong></td>
+                    <td><strong>{{ item.unitPrice ? item.unitPrice.toFixed(2) : '0.00' }}€</strong></td>
+                    <td><strong>{{ item.unitPrice && item.quantity ? (item.unitPrice * item.quantity).toFixed(2) : '0.00' }}€</strong></td>
                 </tr>
             </tbody>
         </table>

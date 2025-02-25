@@ -20,10 +20,10 @@
                 </thead>
                 <tbody>
                     <tr v-for="order in orders" :key="order.id_order">
-                        <td>#{{ order.id_order }}</td>
-                        <td>{{ formatDate(order.created_at) }}</td>
-                        <td>{{ order.total_price ? parseFloat(order.total_price).toFixed(2) : '0.00' }}</td>
-                        <td :class="getStatusClass(order.status)">{{ order.status }}</td>
+                        <td><strong>#{{ order.id_order }}</strong></td>
+                        <td><strong>{{ formatDate(order.created_at) }}</strong></td>
+                        <td><strong>{{ order.total_price ? parseFloat(order.total_price).toFixed(2) : '0.00' }}</strong></td>
+                        <td :class="getStatusClass(order.status)"><strong>{{ order.status }}</strong></td>
                         <td>
                             <button 
                                 v-if="order.status === 'en attente' && isAdmin"
@@ -31,11 +31,18 @@
                                 class="cancel-btn">
                                 Annuler
                             </button>
-                            <span v-else>Aucune action</span>
+                            <span v-else><strong>Aucune action</strong></span>
                         </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" v-if="orders.length > 0">
+            <button @click="prevPage" :disabled="currentPage === 1" class="pagination-btn">Précédent</button>
+            <span>Page {{ currentPage }} / {{ totalPages }}</span>
+            <button @click="nextPage" :disabled="currentPage >= totalPages" class="pagination-btn">Suivant</button>
         </div>
 
         <p v-if="error" class="error">{{ error }}</p>
@@ -56,6 +63,28 @@ export default {
         const message = ref('');
         const error = ref('');
         const userRole = ref(null);
+
+         // Pagination des commandes
+        const currentPage = ref(1);
+        const ordersPerPage = 10;
+        const totalPages = computed(() => Math.ceil(orders.value.length / ordersPerPage));
+
+        const paginatedOrders = computed(() => {
+            const start = (currentPage.value - 1) * ordersPerPage;
+            return orders.value.slice(start, start + ordersPerPage);
+        });
+
+        function nextPage() {
+            if (currentPage.value < totalPages.value) {
+                currentPage.value++;
+            }
+        }
+
+        function prevPage() {
+            if (currentPage.value > 1) {
+                currentPage.value--;
+            }
+        }
 
         // Vérifie si l'utilisateur est administrateur
         const isAdmin = computed(() => userRole.value === 3);
@@ -158,7 +187,8 @@ export default {
         });
 
         return {
-            userName, orders, message, error, cancelOrder, logout, formatDate, getStatusClass, isAdmin
+            userName, orders, message, error, cancelOrder, logout, formatDate, getStatusClass, isAdmin, 
+            currentPage, ordersPerPage, totalPages, paginatedOrders, nextPage, prevPage
         };
     }
 };
@@ -223,6 +253,37 @@ th {
 
 .cancel-btn:hover {
     background-color: #e68900;
+}
+
+/* 🔹 Styles de la pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.pagination button {
+    background-color: #F0F1FF;
+    color: #6066FA;
+    border: 1px solid #6066FA;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #6066FA;
+    color: #F0F1FF;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
 }
 
 /* Status colors */
