@@ -19,12 +19,20 @@
                     <p :class="{ 'active': $route.path === '/cart' }">Panier<span v-if="totalItems > 0" class="cart-badge">{{ totalItems }}</span></p>
                 </router-link>
                 <!-- Affichage conditionnel des boutons en fonction de l'authentification -->
-                <div class="auth-links">
+                <!-- <div class="auth-links">
                     <router-link to="/register" v-if="!isAuthenticated" class="menu-item">S'enregistrer</router-link>
                     <router-link to="/login" v-if="!isAuthenticated" class="menu-item">Se connecter</router-link>
                     <button @click="logout" v-if="isAuthenticated" class="logout-button">Déconnexion</button>
                     <router-link to="/dashboard" v-if="isAuthenticated" class="menu-item">Mon Profil</router-link>
-
+                </div> -->
+                <!-- Liens d'authentification améliorés -->
+                <div class="auth-links">
+                    <router-link to="/register" exact class="auth-item" :class="{ 'active-auth': $route.path === '/register' }">
+                        S'enregistrer
+                    </router-link>
+                    <router-link to="/login" exact class="auth-item" :class="{ 'active-auth': $route.path === '/login' }">
+                        Se connecter
+                    </router-link>
                 </div>
                 
             </div>
@@ -34,9 +42,8 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useCartStore } from '@/store/cartStore';
-import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -47,9 +54,7 @@ export default {
         console.log("Total items in cart:", totalItems.value); // Debug log
 
         const router = useRouter();
-        // const isAuthenticated = ref(false);
         const isAuthenticated = ref(!!localStorage.getItem('token'));
-
 
         // Vérifier si un token est stocké
         function checkAuth() {
@@ -151,11 +156,40 @@ p {
     position: relative;
 }
 
-.auth-links {
+/* .auth-links {
     display: flex;
     align-items: center;
     gap: 15px;
     margin-left: 20px;
+} */
+
+/* Amélioration des liens d'authentification */
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.auth-item {
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.auth-item:hover {
+    background-color: #F0F1FF;
+    color: #6066FA;
+}
+
+/* Couleur du lien actif */
+.active-auth {
+    color: #6066FA;
+    font-weight: bold;
 }
 
 .logout-button {
@@ -171,6 +205,7 @@ p {
     background-color: darkred;
 }
 
+/* Panier */
 .cart-badge {
     /*background-color: red;*/
     background-color: #6066FA;
