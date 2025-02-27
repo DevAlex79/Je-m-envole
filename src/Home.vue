@@ -81,18 +81,21 @@ export default {
 </script>
 
 <style scoped>
-/* Styles spécifiques à la mise en page de la page d'accueil */
+/* Conteneur principal des articles */
 .articles-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /*gap: 20px;*/
+    max-width: 1200px; /* Centrage et limite de largeur */
+    margin: 40px auto;
+    gap: 20px; /* Espacement uniforme */
 }
 
 .column {
     width: 50%;
     /* Définir la largeur de .column */
-    max-width: calc(40% - 60px);
+    max-width: calc(50% - 20px);
+    max-width: 500px; /* Limite la largeur */
     /* Limite la largeur de .column à 50% de la largeur de l'espace disponible (moins l'espacement entre les colonnes) */
     /*flex: 1 0 45%;
     /* Flex-grow: 1, Flex-shrink: 0, Flex-basis: 45% */
@@ -100,45 +103,44 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 10px;
+    
 }
 
+/* Article individuel */
 .article {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    background: white;
     border-radius: 5px;
-    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
 }
 
+.article:hover {
+    transform: scale(1.03);
+}
+
+/* Image de l'article */
+.article img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px 5px 0 0;
+    object-fit: cover;
+}
+
+/* Contenu texte de l'article */
 .texte-article {
-    padding: 10px;
+    padding: 15px;
+    text-align: left;
 }
 
-.texte-article p {
-    color: #808080;
-    font-family: Lato;
-    font-size: 14px;
-    font-style: normal;
-}
-
+/* Catégories colorées */
 h2 {
     font-size: 12px;
-}
-
-.categorie-cuisine,
-.categorie-jardin,
-.categorie-loisirs,
-.categorie-voyages {
-    width: 57px;
-    height: 16px;
-    border-radius: 3px;
-    display: inline-flex;
-    padding: 0px 10px 1px 10px;
-    align-items: flex-start;
-    gap: 10px;
+    font-weight: bold;
+    padding: 5px 10px;
+    display: inline-block;
+    border-radius: 5px;
 }
 
 .categorie-cuisine {
@@ -148,7 +150,7 @@ h2 {
 
 .categorie-jardin {
     color: #44D382;
-    background-color: #eafaf1;
+    background-color: #EAF5EA;
 }
 
 .categorie-loisirs {
@@ -158,24 +160,67 @@ h2 {
 
 .categorie-voyages {
     color: #F39E30;
-    background-color: #fef4e7;
+    background-color: #FEF4E7;
 }
 
+/* Titre de l'article */
 .titre {
     color: #333;
-    font-family: Poppins;
+    font-family: Poppins, sans-serif;
     font-size: 18px;
     font-weight: 700;
     line-height: 30px;
     letter-spacing: -0.6px;
 }
 
-img {
-    width: 100%;
-    height: 200px;
-    border-radius: 5px 5px 0px 0px;
-    /*object-fit: cover; /* Ajuste la taille de l'image pour qu'elle remplisse son conteneur */
+/* Texte descriptif */
+.texte-article p {
+    color: #808080;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
+/* 📱 Responsive - Tablette (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+    .articles-container {
+        flex-direction: column; /* Passage en une seule colonne */
+        align-items: center;
+    }
 
+    .column {
+        width: 80%; /* Largeur plus adaptée pour tablette */
+        max-width: 600px;
+    }
+
+    .article img {
+        height: 300px; /* Réduction de la hauteur sur tablette */
+    }
+}
+
+/* 📱 Responsive - Mobile (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    .column {
+        width: 90%; /* Ajustement de la largeur */
+    }
+
+    .article img {
+        height: 250px;
+    }
+}
+
+/* 📱 Responsive - Très petits mobiles (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    .column {
+        width: 100%; /* Prend toute la largeur sur petits écrans */
+    }
+
+    .article img {
+        height: 220px; /* Ajustement hauteur */
+    }
+
+    .texte-article {
+        padding: 15px;
+    }
+}
 </style>

@@ -114,4 +114,77 @@ footer {
 .icone:hover {
     color: #6066FA;
 }
+
+/* ✅ RESPONSIVE DESIGN */
+
+/* 📌 Tablettes (ajuste les espacements et réduit la taille des icônes) */
+@media screen and (max-width: 1024px) {
+    footer {
+        padding: 15px 5px;
+    }
+
+    .logo-small {
+        width: 70px; /* Réduction du logo */
+    }
+
+    .icones {
+        gap: 5px;
+    }
+
+    .icone {
+        width: 18px;
+    }
+
+    .navigation h3,
+    .informations h3 {
+        font-size: 13px;
+    }
+
+    .navigation p,
+    .informations p {
+        font-size: 11px;
+    }
+}
+
+/* 📌 Mobiles (encore plus compact, mais toujours en ligne) */
+@media screen and (max-width: 768px) {
+    footer {
+        padding: 10px 5px;
+        font-size: 10px;
+    }
+
+    .logo-small {
+        width: 60px; /* Encore plus petit */
+    }
+
+    .icones {
+        gap: 4px;
+    }
+
+    .icone {
+        width: 16px;
+    }
+
+    .navigation p,
+    .informations p {
+        font-size: 10px;
+    }
+}
+
+/* 📌 Très petits mobiles */
+@media screen and (max-width: 480px) {
+    footer {
+        padding: 8px 3px;
+        width: 100%;
+    }
+
+    .logo-small {
+        width: 50px;
+    }
+
+    .icone {
+        width: 14px;
+    }
+}
+
 </style>

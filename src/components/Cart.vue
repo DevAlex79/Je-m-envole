@@ -240,15 +240,6 @@ th {
 
 }
 
-/* .remove-row {
-    cursor: pointer;
-    color: red;
-    font-weight: bold;
-    border: none;
-    background: none;
-    font-size: larger;
-} */
-
 .quantity-container {
     display: flex;
     align-items: center;
@@ -399,27 +390,59 @@ label {
     color: #000000 !important;
 }
 
-
-
-
-
-/*#cart {
-    padding: 20px;
-}
-
-.cart-item {
+/* Rend le tableau des totaux plus flexible */
+.totals-container {
+    width: 100%;
     display: flex;
-    margin-bottom: 20px;
-}
-
-.cart-item img {
-    width: 100px;
-    height: auto;
-    margin-right: 20px;
-}
-
-.cart-summary {
+    justify-content: center;
+    overflow-x: auto;
     margin-top: 20px;
-    font-size: 20px;
-}*/
+}
+
+/* Applique le même style que le tableau des articles */
+.totals-table {
+    width: 70%;
+    max-width: 800px;
+    border-collapse: collapse;
+    border: 1px solid #000000;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Cellules du tableau */
+.totals-table td {
+    padding: 10px;
+    border: 1px solid #000;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+}
+
+/* Responsive - Tablette */
+@media screen and (max-width: 1024px) {
+    .totals-table {
+        width: 90%;
+        font-size: 14px;
+    }
+}
+
+/* Responsive - Mobile */
+@media screen and (max-width: 768px) {
+    .totals-container {
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .totals-table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .totals-table td {
+        padding: 8px;
+    }
+}
+
 </style>

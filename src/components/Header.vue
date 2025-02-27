@@ -4,7 +4,12 @@
     </div>
     <header>
         <nav id="menu">
-            <div class="menu">
+            <!-- Menu burger -->
+            <div class="burger-menu" @click="toggleMenu">
+                ☰
+            </div>
+
+            <div class="menu" :class="{ 'menu-open': isMenuOpen }">
                 <!--  Home ? A VOIR -->
                 <router-link to="/" exact class="menu-item">
                     <p :class="{ 'active': $route.path === '/' || $route.path === '/home' }">Accueil</p>
@@ -50,6 +55,11 @@ export default {
     setup() {
         const cart = useCartStore();
         const totalItems = computed(() => cart.totalItems);
+        const isMenuOpen = ref(false);
+
+        function toggleMenu() {
+            isMenuOpen.value = !isMenuOpen.value;
+        }
 
         console.log("Total items in cart:", totalItems.value); // Debug log
 
@@ -71,6 +81,8 @@ export default {
 
         return {
             totalItems,
+            isMenuOpen,
+            toggleMenu,
             isAuthenticated,
             logout
         };
@@ -96,16 +108,18 @@ export default {
 #logo {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-shrink: 0;
+    margin-top: 10px;
 }
 
 #logo img {
-    width: 21rem;
+    width: 21rem; /* Au lieu de 180px */
     height: auto;
 }
 
 /* Menu */
-header {
+/* header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -127,56 +141,78 @@ header {
     height: 30px;
     margin-top: 50px;
     margin-bottom: 30px;
-}
+} */
 
-.menu p {
-    margin: 0 15px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#menu,
-p {
+/* HEADER */
+header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    color: #000000;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: bold;
-    line-height: normal;
-    letter-spacing: -0.42px;
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* MENU */
+#menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-right: 50px;
+    /* overflow: hidden; */
+}
+
+/* Menu normal sur écran large */
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    transition: 0.3s ease-in-out;
 }
 
 .menu-item {
-    margin: 0 15px;
-    font-size: 16px;
+    margin: 0 30px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    position: relative;
+    text-decoration: none;
+    color: black;
+    padding: 8px 12px;
+    
+    border-radius: 5px;
+    
+    transition: color 0.3s ease;
 }
 
-/* .auth-links {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-left: 20px;
-} */
+.menu-item:hover {
+    background-color: #F0F1FF;
+    color: #6066FA;
+}
 
-/* Amélioration des liens d'authentification */
+/* COULEUR ACTIVE DES LIENS */
+.active {
+    color: #6066FA;
+}
+
+/* AUTHENTIFICATION */
 .auth-links {
     display: flex;
     align-items: center;
     gap: 20px;
     margin-left: auto;
-    margin-right: 10px;
 }
 
 .auth-item {
     text-decoration: none;
     font-weight: bold;
+    font-size: 16px;
     color: black;
     padding: 8px 15px;
+    
     border-radius: 5px;
     transition: 0.3s ease;
 }
@@ -192,22 +228,8 @@ p {
     font-weight: bold;
 }
 
-.logout-button {
-    background-color: red;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.logout-button:hover {
-    background-color: darkred;
-}
-
-/* Panier */
+/* PANIER */
 .cart-badge {
-    /*background-color: red;*/
     background-color: #6066FA;
     color: white;
     border-radius: 50%;
@@ -219,7 +241,103 @@ p {
     right: -10px;
 }
 
-.active {
-    color: #6066FA;
+/* MENU BURGER (TABLETTE ET MOBILE) */
+.burger-menu {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    background: none;
+    border: none;
+    z-index: 1000;
+    color:#6066FA;
 }
+
+/* Ajout d’un fond semi-transparent */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+/* RESPONSIVE  */
+
+/* TABLETTES & MOBILES (MENU BURGER) */
+@media screen and (max-width: 1024px) {
+    .burger-menu {
+        display: block;
+    }
+
+    /* Cache le menu normal et active le burger */
+    .menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background-color: white;
+        width: 85%;
+        max-width: 320px;
+        position: absolute;
+        top: 80px;
+        right: 7.5%;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 15px 0;
+        z-index: 999;
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+    }
+
+    .menu.menu-open {
+        display: flex;
+        background-color: white;
+        width: 25%;
+        height: auto;
+        border:#6066FA 1px solid;
+        background-color: #F0F1FF;
+    }
+
+    /* Ajustement des espacements */
+    .menu-item {
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    /* Ajustement des liens d'authentification */
+    .auth-links {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        margin-top: 10px;
+        
+    }
+
+    /* Overlay activé avec le menu */
+    .menu.menu-open + .menu-overlay {
+        display: block;
+    }
+}
+
+/* PETITS ÉCRANS */
+@media screen and (max-width: 480px) {
+    .burger-menu {
+        font-size: 20px;
+        top: 15px;
+        right: 15px;
+    }
+
+    .menu-item {
+        font-size: 14px;
+    }
+
+    .auth-item {
+        font-size: 14px;
+    }
+}
+
 </style>
