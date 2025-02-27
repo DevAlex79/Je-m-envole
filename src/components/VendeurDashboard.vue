@@ -45,7 +45,7 @@
         <!-- Pagination produits -->
         <div class="pagination" v-if="products.length > 0">
             <button @click="prevProductPage" :disabled="productPage === 1" class="pagination-btn">Précédent</button>
-            <span>Page {{ productPage }} / {{ totalProductPages }}</span>
+            <span><strong>Page {{ productPage }} / {{ totalProductPages }}</strong></span>
             <button @click="nextProductPage" :disabled="productPage >= totalProductPages"
                 class="pagination-btn">Suivant</button>
         </div>

@@ -57,25 +57,92 @@ export default {
 
 <style scoped>
 .auth-container {
-    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligner en haut */
+    align-items: center;
+    min-height: 100vh; /* Occuper toute la hauteur de l'écran */
     margin: 0 auto;
     text-align: center;
+    padding-top: 5vh;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #F0F1FF, #E3E4FF);
 }
+
+.auth-container h1 {
+    color:#6066FA;
+}
+
+
+form {
+    width: 100%;
+    max-width: 450px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+     /* Effet verre dépoli */
+    backdrop-filter: blur(10px);
+}
+
 input, button {
     display: block;
-    width: 100%;
+    width: 95%;
     margin: 10px 0;
     padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* 🔹 Amélioration des inputs */
+input {
+    background: #F9FAFF;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+    border-color: #6066FA;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(96, 102, 250, 0.5);
+}
+
+/* 🔹 Amélioration des boutons */
 button {
-    background-color: #28a745;
+    background-color: #6066FA;
     color: white;
-    border: none;
+    font-weight: bold;
     cursor: pointer;
+    margin-left: 10px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
+
 button:hover {
-    background-color: #218838;
+    background-color: #F0F1FF;
+    color: #6066FA;
+    border:#6066FA 1px solid;
+    transform: scale(1.05);
 }
+
+p {
+    margin-top: 10px;
+    gap: 10px;
+}
+
+a {
+    color: #6066FA;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #4A50E0;
+}
+
 .error {
     color: red;
 }

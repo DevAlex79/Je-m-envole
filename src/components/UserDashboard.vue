@@ -41,7 +41,7 @@
         <!-- Pagination -->
         <div class="pagination" v-if="orders.length > 0">
             <button @click="prevPage" :disabled="currentPage === 1" class="pagination-btn">Précédent</button>
-            <span>Page {{ currentPage }} / {{ totalPages }}</span>
+            <span><strong>Page {{ currentPage }} / {{ totalPages }}</strong></span>
             <button @click="nextPage" :disabled="currentPage >= totalPages" class="pagination-btn">Suivant</button>
         </div>
 

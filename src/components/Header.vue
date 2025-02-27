@@ -175,6 +175,8 @@ header {
 }
 
 .menu-item {
+    position: relative; /* Permet au badge de rester dans son conteneur */
+    display: inline-block;
     margin: 0 30px;
     font-size: 18px;
     font-weight: bold;
@@ -182,9 +184,7 @@ header {
     text-decoration: none;
     color: black;
     padding: 8px 12px;
-    
     border-radius: 5px;
-    
     transition: color 0.3s ease;
 }
 
@@ -233,13 +233,17 @@ header {
     background-color: #6066FA;
     color: white;
     border-radius: 50%;
-    padding: 5px 10px;
+    padding: 4px 8px;
     margin-left: 5px;
     font-size: 12px;
     position: absolute;
-    top: -10px;
-    right: -10px;
-}
+    top: -1px;
+    right: -8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 12px;
+} 
 
 /* MENU BURGER (TABLETTE ET MOBILE) */
 .burger-menu {

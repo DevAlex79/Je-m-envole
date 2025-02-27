@@ -87,22 +87,28 @@ export default {
 .auth-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Aligner en haut */
     align-items: center;
     min-height: 100vh; /* Occuper toute la hauteur de l'écran */
     text-align: center;
+    padding-top: 5vh;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #F0F1FF, #E3E4FF);
 }
 
 .auth-container h1 {
     color:#6066FA;
 }
+
 form {
     width: 100%;
-    max-width: 350px;
+    max-width: 450px;
     background: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     /* Effet verre dépoli */
+    backdrop-filter: blur(10px);
 }
 
 h1 {
@@ -110,40 +116,63 @@ h1 {
 }
 
 input, button {
-    width: 100%;
+    display: block;
+    width: 95%;
     margin: 10px 0;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* 🔹 Amélioration des inputs */
+input {
+    background: #F9FAFF;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+    border-color: #6066FA;
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(96, 102, 250, 0.5);
+}
+
+/* Amélioration des boutons */
 button {
     background-color: #6066FA;
     color: white;
-    border: none;
+    font-weight: bold;
     cursor: pointer;
     font-weight: bold;
+    margin-left: 10px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #F0F1FF;
     color: #6066FA;
     border:#6066FA 1px solid;
+    transform: scale(1.05);
 }
 
 p {
     margin-top: 10px;
+    gap: 10px;
 }
 
 a {
     color: #6066FA;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.2s ease;
+    
 }
 
 a:hover {
     text-decoration: underline;
+    color: #4A50E0;
 }
 </style>
 

@@ -43,7 +43,7 @@
         <!-- Pagination utilisateurs -->
         <div class="pagination">
             <button @click="prevUserPage" :disabled="userPage === 1" class="pagination-btn">Précédent</button>
-            <span>Page {{ userPage }} / {{ totalUserPages }}</span>
+            <span><strong>Page {{ userPage }} / {{ totalUserPages }}</strong></span>
             <button @click="nextUserPage" :disabled="userPage >= totalUserPages" class="pagination-btn">Suivant</button>
         </div>
 
@@ -81,7 +81,7 @@
         <!-- Pagination produits -->
         <div class="pagination">
             <button @click="prevProductPage" :disabled="productPage === 1" class="pagination-btn">Précédent</button>
-            <span>Page {{ productPage }} / {{ totalProductPages }}</span>
+            <span><strong>Page {{ productPage }} / {{ totalProductPages }}</strong></span>
             <button @click="nextProductPage" :disabled="productPage >= totalProductPages" class="pagination-btn">Suivant</button>
         </div>
 

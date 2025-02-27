@@ -51,7 +51,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Sous-total des articles :</strong></td>
+                    <td><strong>Sous-total articles :</strong></td>
                     <td><strong>{{ cart.totalArticlesPrice.toFixed(2) }}€</strong></td>
                 </tr>
                 <tr>
@@ -296,7 +296,7 @@ th {
 }
 
 .total-row {
-    background-color: #f2f2f2;
+    background-color: #F0F1FF;
     font-weight: bold;
 }
 
