@@ -33,10 +33,10 @@
                 <!-- Liens d'authentification améliorés -->
                 <div class="auth-links">
                     <router-link to="/register" exact class="auth-item" :class="{ 'active-auth': $route.path === '/register' }">
-                        S'enregistrer
+                        Inscription
                     </router-link>
                     <router-link to="/login" exact class="auth-item" :class="{ 'active-auth': $route.path === '/login' }">
-                        Se connecter
+                        Connexion
                     </router-link>
                 </div>
                 
