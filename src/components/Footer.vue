@@ -21,7 +21,7 @@
                     <a href="src/svg/facebook.svg" target="_blank"><img class="icone" src="@/svg/ico-fb.svg"
                             alt="Facebook"></a>
                     <a href="src/svg/ico-twitter.svg" target="_blank"><img class="icone" src="@/svg/ico-twitter.svg"
-                            alt="Twitter"></a>
+                            alt="X"></a>
                     <a href="src/svg/ico-linkedin.svg" target="_blank"><img class="icone" src="@/svg/ico-linkedin.svg"
                             alt="LinkedIn"></a>
                 </div>
@@ -115,7 +115,7 @@ footer {
     color: #6066FA;
 }
 
-/* ✅ RESPONSIVE DESIGN */
+/* RESPONSIVE DESIGN */
 
 /* 📌 Tablettes (ajuste les espacements et réduit la taille des icônes) */
 @media screen and (max-width: 1024px) {
@@ -146,7 +146,7 @@ footer {
     }
 }
 
-/* 📌 Mobiles (encore plus compact, mais toujours en ligne) */
+/* Mobiles (encore plus compact, mais toujours en ligne) */
 @media screen and (max-width: 768px) {
     footer {
         padding: 10px 5px;
@@ -171,7 +171,7 @@ footer {
     }
 }
 
-/* 📌 Très petits mobiles */
+/* Très petits mobiles */
 @media screen and (max-width: 480px) {
     footer {
         padding: 8px 3px;

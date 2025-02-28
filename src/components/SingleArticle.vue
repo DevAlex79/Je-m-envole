@@ -109,10 +109,6 @@ export default {
         },
     },
     mounted() {
-        // Récupérer l'ID de l'article depuis l'URL
-        //const urlParams = new URLSearchParams(window.location.search);
-        //const articleId = parseInt(urlParams.get('id'));
-
         // Récupérer l'ID de l'article à partir des paramètres de l'itinéraire
         const articleId = parseInt(this.$route.params.id, 10); // Convertir en nombre
         //const articleId = this.$route.params.id;
@@ -127,12 +123,6 @@ export default {
                 const articleDetails = articles.find(article => article.id === articleId);
                 console.log("Détails de l'article trouvé :", articleDetails);
 
-                /*if (!articleDetails) {
-                    console.error('Article non trouvé.');
-                } else {
-                    // Mettre à jour la donnée de l'article
-                    this.article = articleDetails;
-                }*/
                 if (articleDetails) {
                     this.article = articleDetails;
                 } else {

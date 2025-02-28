@@ -5,24 +5,6 @@
         <!-- Affichage du panier -->
         <p v-if="cart.lines.length === 0">Votre panier est vide.</p>
 
-        <!-- <table v-else>
-            <thead>
-                <tr>
-                    <th>Article</th>
-                    <th>Quantité</th>
-                    <th>Prix unitaire</th>
-                    <th>Prix total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in cart.lines.lines" :key="item.id">
-                    <td>{{ item.title }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.unitPrice ? item.unitPrice.toFixed(2) : '0.00' }}€</td>
-                    <td>{{ item.unitPrice && item.quantity ? (item.unitPrice * item.quantity).toFixed(2) : '0.00' }}€</td>
-                </tr>
-            </tbody>
-        </table> -->
         <table class="summary-table">
             <thead>
                 <tr>
@@ -68,21 +50,6 @@
                 </tr>
             </tbody>
         </table>
-
-
-
-        <!-- Mode de livraison -->
-        <!-- <div v-if="cart.lines.length > 0" class="shipment-container">
-            <h2>Mode de livraison</h2>
-            <p>Type: <strong>{{ shipment.type || 'Non spécifié' }}</strong></p>
-            <p>Frais de livraison: <strong>{{ shipment.price ? shipment.price.toFixed(2) : '0.00' }}€</strong></p>
-        </div> -->
-
-        <!-- Total de la commande -->
-        <!-- <div v-if="cart.lines.length > 0" class="total-container">
-            <h2>Total à payer</h2>
-            <p><strong>{{ totalPrice.toFixed(2) }}€</strong></p>
-        </div> -->
 
         <!-- Bouton de validation de la commande -->
         <button v-if="cart.lines.lines.length > 0" @click="confirmOrder" class="confirm-order-button">
