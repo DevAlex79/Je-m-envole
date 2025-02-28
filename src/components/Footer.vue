@@ -117,10 +117,14 @@ footer {
 
 /* RESPONSIVE DESIGN */
 
-/* 📌 Tablettes (ajuste les espacements et réduit la taille des icônes) */
+/* Tablettes (ajuste les espacements et réduit la taille des icônes) */
 @media screen and (max-width: 1024px) {
     footer {
         padding: 15px 5px;
+    }
+
+    .footer {
+        text-align: center;
     }
 
     .logo-small {
@@ -146,15 +150,15 @@ footer {
     }
 }
 
-/* Mobiles (encore plus compact, mais toujours en ligne) */
+/* Mobiles : Footer en colonne pour éviter le dépassement */
 @media screen and (max-width: 768px) {
-    footer {
+    /* footer {
         padding: 10px 5px;
         font-size: 10px;
     }
 
     .logo-small {
-        width: 60px; /* Encore plus petit */
+        width: 60px;
     }
 
     .icones {
@@ -168,22 +172,68 @@ footer {
     .navigation p,
     .informations p {
         font-size: 10px;
+    } */
+    .footer {
+        flex-direction: row; /* Reste en ligne */
+        justify-content: space-around; /* Espacement équilibré */
+        align-items: center; /* Centre les éléments verticalement */
+        width: 100%;
+        flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
+        padding: 10px;
+    }
+
+    .logo-small {
+        width: 55px; /* Légèrement réduit */
+    }
+
+    .navigation, 
+    .informations, 
+    .follow {
+        text-align: center; /* Centre uniquement le texte */
+        flex: 1; /* Permet une répartition équitable des éléments */
+        min-width: 100px; /* Empêche les éléments de trop se rétrécir */
+    }
+
+    .navigation h3,
+    .informations h3 {
+        text-align: left;
+    }
+    .icones {
+        display: flex;
+        justify-content: center; /* Centre les icônes horizontalement */
+        gap: 6px;
+    }
+
+    .icone {
+        width: 14px;
     }
 }
 
 /* Très petits mobiles */
 @media screen and (max-width: 480px) {
     footer {
-        padding: 8px 3px;
-        width: 100%;
+        /* padding: 8px 3px;
+        width: 100%; */
+        padding: 5px;
+        flex-wrap: wrap; /* Permet aux éléments de s'ajuster */
     }
 
     .logo-small {
-        width: 50px;
+        width: 45px;
+    }
+
+    .navigation, 
+    .informations, 
+    #follow {
+        flex-basis: 30%; /* Ajuste la largeur pour ne pas trop serrer */
+    }
+
+    .icones {
+        justify-content: center; /* Centre les icônes */
     }
 
     .icone {
-        width: 14px;
+        width: 12px;
     }
 }
 

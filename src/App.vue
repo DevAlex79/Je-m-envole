@@ -72,6 +72,7 @@ body {
   margin: 0 auto;
   /* Centre le contenu horizontalement */
   border: 1px solid #000;
+  border-bottom: #000 2px solid;
   border-radius: 5px 5px 5px 5px;
   background: #FFFFFF;
   font-family: Poppins;

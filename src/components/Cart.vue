@@ -1,99 +1,114 @@
 <template>
     <div>
         <h1>Votre Panier</h1>
-        <table id="checkout">
-            <thead>
-                <tr>
-                    <th>Article</th>
-                    <th>Quantité</th>
-                    <th>Prix unitaire</th>
-                    <th>Prix total</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="cartBody">
-                <tr v-for="line in cart.lines.lines" :key="line.id"> <!--line.name-->
-                    <td :style="{ color: '#000000' }">{{ line.title }}</td>
-                    <!-- <td :style="{ color: '#000000' }">{{ line.quantity }}</td> -->
-                    <td>
-                        <div class="quantity-container">
-                            <button @click="decreaseQuantity(line)" class="quantity-btn">-</button>
-                            <span class="quantity-display">{{ line.quantity }}</span>
-                            <button @click="increaseQuantity(line)" class="quantity-btn">+</button>
-                            
-                        </div>
-                    </td>
-                    <td :style="{ color: '#000000' }">{{ line.unitPrice ? line.unitPrice.toFixed(2) : '0.00' }}€</td>
-                    <td :style="{ color: '#000000' }">{{ line.total ? line.total.toFixed(2) : '0.00' }}€</td>
-                    <!-- <td><button @click="removeProductFromCart(line)" class="remove-row">Supprimer</button></td> -->
-                    <td>
-                        <button @click="removeProductFromCart(line)" class="remove-row">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
 
-                </tr>
-            </tbody>
-            <tfoot>
-                
-                <tr>
-                    <td colspan="5">
-                        <button @click="goToArticles" class="add-row-button">Ajouter un article</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5" style="text-align: right;">
-                        <button @click="clearCart" class="clear-cart-button">Vider le panier</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5" style="text-align: right;">
-                        <button @click="validateCart" class="validate-cart-button">
-                        Valider mon panier
-                    </button>
-                    </td>
-                </tr>             
-                
-            </tfoot>
-        </table>
-        
+        <div class="scroll-container">
+        <!-- Flèche gauche -->
+        <button v-if="showLeftArrow" class="scroll-arrow left-arrow" @click="scrollTable(-1)">&#8249;</button>
+
+            <!-- Conteneur du tableau avec scroll horizontal -->
+            <div class="table-container" ref="tableContainer">
+                <table id="checkout">
+                    <thead>
+                        <tr>
+                            <th>Article</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Prix total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartBody">
+                        <tr v-for="line in cart.lines.lines" :key="line.id"> <!--line.name-->
+                            <td :style="{ color: '#000000' }">{{ line.title }}</td>
+                            <!-- <td :style="{ color: '#000000' }">{{ line.quantity }}</td> -->
+                            <td>
+                                <div class="quantity-container">
+                                    <button @click="decreaseQuantity(line)" class="quantity-btn">-</button>
+                                    <span class="quantity-display">{{ line.quantity }}</span>
+                                    <button @click="increaseQuantity(line)" class="quantity-btn">+</button>
+                                </div>
+                            </td>
+                            <td :style="{ color: '#000000' }">{{ line.unitPrice ? line.unitPrice.toFixed(2) : '0.00' }}€
+                            </td>
+                            <td :style="{ color: '#000000' }">{{ line.total ? line.total.toFixed(2) : '0.00' }}€</td>
+                            <!-- <td><button @click="removeProductFromCart(line)" class="remove-row">Supprimer</button></td> -->
+                            <td>
+                                <button @click="removeProductFromCart(line)" class="remove-row">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <button @click="goToArticles" class="add-row-button">Ajouter un article</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align: right;">
+                                <button @click="clearCart" class="clear-cart-button">Vider le panier</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align: right;">
+                                <button @click="validateCart" class="validate-cart-button">
+                                    Valider mon panier
+                                </button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
         <!-- Sélection du mode de livraison -->
         <div class="label" v-if="cart.shipment">
             <label>
-                <input type="radio" name="livraison-type" value="relais" @change="updateShipmentType('relais')" :checked="cart.shipment.type === 'relais'">
+                <input type="radio" name="livraison-type" value="relais" @change="updateShipmentType('relais')"
+                    :checked="cart.shipment.type === 'relais'">
                 Relais Colis (5€)
             </label>
             <label>
-                <input type="radio" name="livraison-type" value="domicile" @change="updateShipmentType('domicile')" :checked="cart.shipment.type === 'domicile'">
+                <input type="radio" name="livraison-type" value="domicile" @change="updateShipmentType('domicile')"
+                    :checked="cart.shipment.type === 'domicile'">
                 À Domicile (12€)
             </label>
         </div>
 
+        <!-- Conteneur du tableau des totaux avec scroll horizontal -->
         <div class="totals-container">
-            <table class="totals-table">
-                <tbody>
-                    <tr>
-                        <td style="color: #000000;">Total Articles:</td>
-                        <td><span id="total-nombre-articles" :style="{ color: '#6066FA' }">{{ totalArticles }}</span>
-                        </td>
-                        <td style="color: #000000;">Prix Total Articles:</td>
-                        <td><span id="prix-total-articles" :style="{ color: '#000000' }">{{
-                    totalArticlesPrice.toFixed(2) }}</span>€</td>
-                        <td style="color: #000000;">Livraison:</td>
-                        <td><span id="livraison-price" :style="{ color: '#000000' }">{{ shipmentPrice.toFixed(2)
-                                }}</span>€</td>
-                        <td style="color: #000000;">Total Général:</td>
-                        <td><span id="prix-total" :style="{ color: '#000000' }">{{ totalPrice.toFixed(2) }}</span>€</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="totals-table">
+                    <tbody>
+                        <tr>
+                            <td style="color: #000000;">Total Articles:</td>
+                            <td><span id="total-nombre-articles" :style="{ color: '#6066FA' }">{{ totalArticles
+                                    }}</span>
+                            </td>
+                            <td style="color: #000000;">Prix Total Articles:</td>
+                            <td><span id="prix-total-articles" :style="{ color: '#000000' }">{{
+                                totalArticlesPrice.toFixed(2) }}</span>€</td>
+                            <td style="color: #000000;">Livraison:</td>
+                            <td><span id="livraison-price" :style="{ color: '#000000' }">{{ shipmentPrice.toFixed(2)
+                                    }}</span>€</td>
+                            <td style="color: #000000;">Total Général:</td>
+                            <td><span id="prix-total" :style="{ color: '#000000' }">{{ totalPrice.toFixed(2) }}</span>€
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Flèche droite -->
+            <button v-if="showRightArrow" class="scroll-arrow right-arrow" @click="scrollTable(1)">&#8250;</button>
         </div>
     </div>
 </template>
 
 <script>
 import { useCartStore } from '@/store/cartStore';
-import { computed } from 'vue';
+import { computed, onMounted, ref, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -101,6 +116,10 @@ export default {
     setup() {
         const cart = useCartStore();
         cart.initShipment();
+        const router = useRouter();
+        const tableContainer = ref(null);
+        const showLeftArrow = ref(false);
+        const showRightArrow = ref(false);
 
         function goToArticles() {
             router.push({ name: 'Articles' }); // Redirection vers la page Articles
@@ -132,16 +151,36 @@ export default {
             cart.clearCart();
         }
 
-        const router = useRouter();
-
         function validateCart() {
             if (cart.lines.lines.length === 0) {
                 alert("Votre panier est vide !");
                 return;
             }
-            router.push({ name: 'Checkout' }); // avoir une route Checkout dans `router/index.js`
+            router.push({ name: 'Checkout' });
         }
 
+        function scrollTable(direction) {
+            if (!tableContainer.value) return;
+            tableContainer.value.scrollBy({ left: direction * 200, behavior: 'smooth' });
+        }
+
+        // Gestion du scroll pour afficher les flèches de navigation
+        function checkScroll() {
+            if (!tableContainer.value) return;
+            showLeftArrow.value = tableContainer.value.scrollLeft > 0;
+            showRightArrow.value = tableContainer.value.scrollLeft < tableContainer.value.scrollWidth - tableContainer.value.clientWidth;
+        }
+
+        // Ajout d'événements au montage
+        onMounted(() => {
+            checkScroll();
+            tableContainer.value?.addEventListener('scroll', checkScroll);
+        });
+
+        // Suppression des écouteurs lors du démontage
+        onUnmounted(() => {
+            tableContainer.value?.removeEventListener('scroll', checkScroll);
+        });
 
         return {
             cart,
@@ -156,17 +195,22 @@ export default {
             validateCart,
             goToArticles,
             increaseQuantity,
-            decreaseQuantity
+            decreaseQuantity,
+            tableContainer,
+            scrollTable,
+            showLeftArrow,
+            showRightArrow
         };
     },
+
     /*computed: {
         cart() {
             return useCartStore();
         }
     },*/
     mounted() {
-        this.cart.initShipment();  
-    //this.cart.loadCartFromLocalStorage();
+        this.cart.initShipment();
+        //this.cart.loadCartFromLocalStorage();
     }
 };
 </script>
@@ -185,16 +229,64 @@ h1 {
     font-weight: 600;
 }
 
+/* Conteneur principal pour gérer le scroll et les flèches */
+.scroll-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Conteneur du tableau avec scroll horizontal */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Améliore le défilement sur mobile */
+}
+
+/* Style des flèches de navigation */
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(96, 102, 250, 0.8);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+    transition: background 0.3s;
+}
+
+.scroll-arrow:hover {
+    background-color: rgba(96, 102, 250, 1);
+}
+
+.left-arrow {
+    left: 10px;
+}
+
+.right-arrow {
+    right: 10px;
+}
+
 table {
-    width: 70%;
+    /* width: 70%;
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;
-    border-collapse: separate;
+    border-collapse: separate; */
     /* Utiliser 'separate' pour gérer les bordures et le border-radius */
-    border-spacing: 0;
+    /* border-spacing: 0; */
     /* Pas d'espace entre les cellules */
-    overflow: hidden;
+    /* overflow: hidden; */
+    width: 100%;
+    min-width: 600px;
+    margin-top: 20px;
+    border-collapse: collapse;
 }
 
 #checkout {
@@ -232,19 +324,25 @@ td {
     padding: 8px;
     text-align: left;
     color: #000000 !important;
-    /* texte noir */
 }
 
 th {
     background-color: #F0F1FF;
+    border: 1px solid #000000;
 
+}
+
+.totals-container {
+    width: 100%;
+    overflow-x: auto;
 }
 
 .quantity-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Espacement horizontal entre les éléments */
+    gap: 10px;
+    /* Espacement horizontal entre les éléments */
 }
 
 .quantity-btn {
@@ -265,7 +363,8 @@ th {
 .quantity-display {
     font-size: 18px;
     font-weight: bold;
-    min-width: 30px; /* Assure un bon alignement */
+    min-width: 30px;
+    /* Assure un bon alignement */
     text-align: center;
 }
 
@@ -310,8 +409,8 @@ th {
 }
 
 .clear-cart-button {
-    background-color: #FEE6E7; 
-    color: #FA5158; 
+    background-color: #FEE6E7;
+    color: #FA5158;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -426,11 +525,18 @@ label {
         width: 90%;
         font-size: 14px;
     }
+
+    th,
+    td {
+        font-size: 14px;
+        padding: 8px;
+    }
 }
 
 /* Responsive - Mobile */
 @media screen and (max-width: 768px) {
-    .totals-container {
+
+    /* .totals-container {
         justify-content: center;
         padding: 10px;
     }
@@ -442,6 +548,59 @@ label {
 
     .totals-table td {
         padding: 8px;
+    } */
+
+    .scroll-container {
+        flex-direction: row;
+        justify-content: center;
+        position: relative;
+    }
+
+    .scroll-arrow {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+    .table-container {
+        overflow-x: auto;
+        /* Assurer le scroll */
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    th,
+    td {
+        font-size: 12px;
+        /* Réduction de la taille de la police */
+        padding: 6px;
+    }
+
+    .quantity-container {
+        flex-direction: column;
+        /* Éviter trop d'espace horizontal */
+        align-items: center;
+    }
+
+    .quantity-btn {
+        padding: 4px 8px;
+        /* Réduction des boutons */
+        font-size: 14px;
+    }
+
+    .totals-table {
+        width: 100%;
+        /* Adapter aux petits écrans */
+        font-size: 12px;
+    }
+
+    .totals-table td {
+        padding: 6px;
+    }
+
+    .scroll-arrow {
+        font-size: 16px;
+        padding: 8px 12px;
     }
 }
 
