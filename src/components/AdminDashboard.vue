@@ -134,6 +134,13 @@ export default {
         const products = ref([]);
         const orders = ref([]);
         const adminName = ref('Administrateur');
+        const username = ref("");
+        const email = ref("");
+        const password = ref("");
+        const role = ref("");
+        const message = ref("");
+        const error = ref("");
+
 
         // Liste des rôles disponibles
         const rolesMap = {
@@ -214,7 +221,71 @@ export default {
             if (orderPage.value > 1) orderPage.value--;
         }
 
+        async function createUser() {
+            try {
+                const token = localStorage.getItem('token');
 
+                if (!token) {
+                    console.error("Aucun token trouvé. Veuillez vous reconnecter.");
+                    return;
+                }
+
+                // Vérifier que tous les champs sont remplis
+                if (!username.value || !email.value || !password.value || !role.value) {
+                    error.value = "Tous les champs sont obligatoires.";
+                    return;
+                }
+
+                // Convertir le rôle en ID
+                const roleMapping = {
+                    "Administrateur": 3,
+                    "Vendeur": 2
+                };
+
+                const roleId = roleMapping[role.value];
+
+                if (!roleId) {
+                    error.value = "Rôle invalide.";
+                    return;
+                }
+
+                const response = await fetch("http://127.0.0.1:8000/api/admin/create-user", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username: username.value,
+                        email: email.value,
+                        password: password.value,
+                        Roles_id_role: roleId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Erreur lors de la création de l'utilisateur.");
+                }
+
+                // Succès : Afficher un message et rafraîchir la liste
+                message.value = "Utilisateur créé avec succès !";
+                error.value = "";
+                fetchUsers(); // Recharge la liste des utilisateurs
+
+                // Réinitialiser les champs du formulaire
+                username.value = "";
+                email.value = "";
+                password.value = "";
+                role.value = "";
+
+            } catch (err) {
+                console.error("Erreur lors de la création de l'utilisateur", err);
+                error.value = err.message;
+            }
+        }
+        
         async function fetchUsers() {
             try {
                 const token = localStorage.getItem('token');
@@ -320,6 +391,7 @@ export default {
             adminName,
             users, products, fetchUsers, fetchProducts, updateStock,
             getRoleName,
+            username, email, password, role, message, error, createUser,
             // Pagination utilisateurs
             paginatedUsers, userPage, totalUserPages, nextUserPage, prevUserPage,
             // Pagination produits

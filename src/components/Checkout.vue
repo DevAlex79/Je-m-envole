@@ -69,7 +69,7 @@ export default {
         const cart = useCartStore();
         const shipment = ref({ type: '', price: 0 });
 
-        // 🔹 Total qui prend en compte la livraison
+        // Total qui prend en compte la livraison
         const totalPrice = computed(() => {
             return (cart.totalArticlesPrice || 0) + (shipment.value.price || 0);
         });
@@ -147,7 +147,7 @@ export default {
                     body: JSON.stringify({
                         id_user: userId,  
                         cart: cart.lines.lines, 
-                        total_price: totalPrice.value, // 🔹 Utilisation du prix total avec la livraison
+                        total_price: totalPrice.value, // Utilisation du prix total avec la livraison
                         status: "en attente",
                         shipmentType: shipment.value.type || "Standard",
                         shipmentPrice: shipment.value.price || 0
@@ -162,7 +162,7 @@ export default {
                 alert('Commande confirmée 🎉');
                 cart.clearCart();
                 localStorage.removeItem('cart');
-                localStorage.removeItem('shipment'); // 🔹 Nettoyage des infos de livraison après validation
+                localStorage.removeItem('shipment'); // Nettoyage des infos de livraison après validation
 
                 // Rediriger vers le Dashboard utilisateur après la commande
                 router.push({ name: 'UserDashboard' });
