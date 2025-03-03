@@ -100,11 +100,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="order in paginatedOrders" :key="order.id_order">
-                        <td>#{{ order.id_order }}</td>
-                        <td>{{ formatDate(order.created_at) }}</td>
-                        <td>{{ order.client_name }}</td>
-                        <td>{{ order.total_price ? parseFloat(order.total_price).toFixed(2) : '0.00' }}</td>
-                        <td>{{ order.status }}</td>
+                        <td><strong>#{{ order.id_order }}</strong></td>
+                        <td><strong>{{ formatDate(order.created_at) }}</strong></td>
+                        <td><strong>{{ order.client_name }}</strong></td>
+                        <td><strong>{{ order.total_price ? parseFloat(order.total_price).toFixed(2) : '0.00' }}</strong></td>
+                        <td><strong>{{ order.status }}</strong></td>
                         <td>
                             <button @click="deleteOrder(order.id_order)" class="delete-btn">Supprimer</button>
                         </td>
@@ -324,13 +324,33 @@ export default {
         }
 
         async function fetchOrders() {
+            // try {
+            //     const token = localStorage.getItem('token');
+            //     const response = await fetch('http://127.0.0.1:8000/api/orders', {
+            //         headers: { 'Authorization': `Bearer ${token}` }
+            //     });
+            //     if (!response.ok) throw new Error("Erreur de récupération des commandes");
+            //     orders.value = await response.json();
+            // } catch (err) {
+            //     console.error("Erreur de récupération des commandes", err);
+            // }
             try {
                 const token = localStorage.getItem('token');
+                
+                if (!token) {
+                    throw new Error("Token d'authentification manquant.");
+                }
+
                 const response = await fetch('http://127.0.0.1:8000/api/orders', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                if (!response.ok) throw new Error("Erreur de récupération des commandes");
-                orders.value = await response.json();
+
+                if (!response.ok) {
+                    throw new Error("Erreur de récupération des commandes");
+                }
+
+                const data = await response.json();
+                orders.value = data;
             } catch (err) {
                 console.error("Erreur de récupération des commandes", err);
             }
@@ -519,10 +539,10 @@ button[type="submit"]:hover {
 
 /* Bouton de suppression */
 .delete-btn {
-    background-color: #FA5158;
-    color: white;
+    background-color: #F0F1FF;
+    color: #6066FA;
     padding: 8px 15px;
-    border: none;
+    border: 1px solid #6066FA;
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
@@ -531,6 +551,7 @@ button[type="submit"]:hover {
 
 .delete-btn:hover {
     background-color: #d32f2f;
+    color: white;
 }
 
 /* Tableau et mise en page */
