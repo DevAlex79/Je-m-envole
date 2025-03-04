@@ -31,7 +31,7 @@
     <!--Copyright-->
     <div id="copyright">
         <div class="copyright">
-            <p>Copyright 2024</p>
+            <p>Copyright 2025</p>
             <p>Réalisation : Alexandra Masi</p>
         </div>
     </div>
