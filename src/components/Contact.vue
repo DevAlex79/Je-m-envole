@@ -189,12 +189,18 @@ button {
     height: 50px;
     transition: all 0.2s linear;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 60px;
+    background-color: #F0F1FF;
+    color: #6066FA;
     font-size: 17px;
+    font-weight: bold;
 }
 
 button:hover {
     background: #FEE6E7;
+    color: #FA5158;
+    border:#FEE6E7 3px solid;
+    font-weight: bold;
 }
 
 /* Animation de fondu */
