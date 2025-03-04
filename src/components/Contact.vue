@@ -112,8 +112,8 @@ export default {
 img {
     margin-top: 0;
     margin-bottom: 0;
-    width: 21.5rem;
-    height: 12.5rem;
+    width: 25.5rem;
+    height: 20.5rem;
 }
 
 h1 {
@@ -180,6 +180,10 @@ textarea {
     border-radius: 3px;
 }
 
+.flexInp::placeholder,
+.emailInp::placeholder {
+    color: #6066FA;
+}
 button {
     width: 45%;
     display: block;
