@@ -155,7 +155,7 @@ h2 {
     margin: 20px auto;
     outline: 0;
     background: #f1f1f1;
-    width: 90%;
+    width: 95%;
     border: 0;
     padding: 15px;
     font-size: 14px;
